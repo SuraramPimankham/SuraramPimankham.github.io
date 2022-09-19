@@ -21,6 +21,10 @@ Route::get('welcome', function () {
     return view('test');
 });
 
+Route::get('index', function () {
+    return view('index');
+})->middleware('auth');
+
 Route::get('form', function () {
     return view('form');
 });
@@ -29,8 +33,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('index', function () {
-    return view('index');
-})->middleware('auth'); //ต้อง login ก่อน ->middleware('auth');
+Route::get('/page', [App\Http\Controllers\HomeController::class, 'page']);
 
-Route::get('/page', [App\Http\Controllers\HomeController::class, 'page'])->name('page');
+Route::post('postprofile', [App\Http\Controllers\ProfileController::class, 'saveprofile']);

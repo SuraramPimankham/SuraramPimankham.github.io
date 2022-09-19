@@ -14,7 +14,14 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('ยินดีต้อนรับเข้าสู่') }}
+                    <br>
+                    <button type="submit" onclick="document.location='form'" class="btn btn-primary"> 
+                    proflie
+                    </button>
+                    <button type="submit" onclick="document.location='page'" class="btn btn-primary"> 
+                    page
+                    </button>
                 </div>
             </div>
         </div>

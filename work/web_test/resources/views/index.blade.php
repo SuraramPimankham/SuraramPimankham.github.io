@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-
-Hello i'm Ram
-
+asdddddddddddddddddddd
 @endsection
