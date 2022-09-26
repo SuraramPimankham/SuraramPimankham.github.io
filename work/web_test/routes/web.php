@@ -36,3 +36,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/page', [App\Http\Controllers\HomeController::class, 'page']);
 
 Route::post('postprofile', [App\Http\Controllers\ProfileController::class, 'saveprofile']);
+
+Route::get('profile_list', [App\Http\Controllers\ProfileController::class, 'getProfile']);
+
+Route::post('delProfile', [App\Http\Controllers\ProfileController::class, 'delProfile']);
+
+Route::get('edit_{id}', [App\Http\Controllers\ProfileController::class, 'formEdit']);
+
+Route::post('updateProfile', [App\Http\Controllers\ProfileController::class, 'updateProfile']);
+

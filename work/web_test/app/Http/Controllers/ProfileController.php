@@ -15,6 +15,34 @@ class ProfileController extends Controller
         $profile->phone = $req->phone;
         $profile->save();
 
-        return view('postprofile');
+        return redirect("profile_list");//ไปหาลิ้งใหม่
+        //return view('postprofile');//ไปหาหน้า view
+    }
+
+    public function getProfile(){
+        $profile_all = Profile::all();
+        //dd($profile_all); แสดงข้อมูลดูก่อนว่ามีไหม
+        return view('profile_list',['profile'=>$profile_all]);
+    }
+
+    public function delProfile(Request $req){
+        Profile::where('id',$req->id)
+        ->delete();
+        return "ok";
+    }
+
+    public function formEdit($id){
+        $profile = Profile::where('id',$id)->first();
+
+        return view('edit_profile',['profile'=>$profile]);
+    }
+
+    public function updateProfile(Request $req){
+        profile::where('id',$req->id)
+        ->update(['first_name'=>$req->first_name,
+                   'last_name'=>$req->last_name,
+                   'email'=>$req->email,
+                   'phone'=>$req->phone,]);
+        return redirect('profile_list');
     }
 }
