@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suraram Profile</title>
+    <title data-i18n="meta.title">โปรไฟล์ Suraram</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
 </head>
 
 <body class="main-content">
@@ -22,84 +23,199 @@
             <div class="left-header">
                 <div class="h-shape"></div>
                 <div class="image">
-                    <img src="img/Suraram.png" alt="">
+                    <img src="img/Suraram.png" alt="" style="border-radius: 200px;">
                 </div>
             </div>
             <div class="right-header">
-                <h1 class="name">
-                    Hi, I'm <span>Suraram Pimankham.</span>
-                    Undergraduate Student.
+                <h1 class="name" data-i18n-html="hero.greeting">
+                    สวัสดีครับ ผมชื่อ <br><span>สุรราม พิมานคำ</span><br />
+                    โปรแกรมเมอร์<br />
+                    เรียกผมว่า <span>ราม</span>
                 </h1>
-                <p>
-                    I'm a bachelor's degree student in computer science. My friend called me Ram. I have an interest in
-                    coding and game development.
-                </p>
+                <div class="tech-stack-wrap">
+                    <div class="tech-stack-groups">
+                        <div class="tech-group">
+                            <div class="tech-stack cols-3" role="list">
+                                <span class="tech-item" role="listitem" title="VS Code">
+                                    <i class="devicon-vscode-plain colored"></i>
+                                </span>
+                                <span class="tech-item" role="listitem" title="Windsurf">
+                                    <img class="tech-icon-img" src="https://cdn.simpleicons.org/windsurf/ffffff"
+                                        alt="Windsurf">
+                                </span>
+                                <span class="tech-item" role="listitem" title="Cursor">
+                                    <img class="tech-icon-img" src="https://cdn.simpleicons.org/cursor/ffffff"
+                                        alt="Cursor">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="tech-group">
+                            <div class="tech-stack cols-3" role="list">
+                                <span class="tech-item" role="listitem" title="ChatGPT">
+                                    <img class="tech-icon-img" src="img/chatGPT.png" alt="ChatGPT" title="ChatGPT">
+                                </span>
+                                <span class="tech-item" role="listitem" title="GitHub">
+                                    <i class="devicon-github-original colored"></i>
+                                </span>
+                                <span class="tech-item" role="listitem" title="Git">
+                                    <i class="devicon-git-plain colored"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="tech-group">
+                            <div class="tech-stack cols-3" role="list">
+                                <span class="tech-item" role="listitem" title="PHP">
+                                    <i class="devicon-php-plain colored"></i>
+                                </span>
+                                <span class="tech-item" role="listitem" title="Laravel">
+                                    <i class="devicon-laravel-plain colored"></i>
+                                </span>
+                                <span class="tech-item" role="listitem" title=".NET">
+                                    <i class="devicon-dotnetcore-plain colored"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="tech-group">
+                            <div class="tech-stack cols-2" role="list">
+                                <span class="tech-item" role="listitem" title="Angular">
+                                    <i class="devicon-angularjs-plain colored"></i>
+                                </span>
+                                <span class="tech-item" role="listitem" title="Flutter">
+                                    <i class="devicon-flutter-plain colored"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="tech-group">
+                            <div class="tech-stack cols-2" role="list">
+                                <span class="tech-item" role="listitem" title="PostgreSQL">
+                                    <i class="devicon-postgresql-plain colored"></i>
+                                </span>
+                                <span class="tech-item" role="listitem" title="MySQL">
+                                    <i class="devicon-mysql-original colored"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
     <main>
         <section class="container about" id="about">
             <div class="main-title">
-                <h2>About <span>Me</span><span class="bg-text">About Me</span></h2>
+                <h2 data-i18n-html="about.title">เกี่ยวกับ<span>ผม</span><span class="bg-text">เกี่ยวกับผม</span></h2>
             </div>
             <div class="about-container">
                 <div class="left-about">
-                    <h4>Information About me</h4>
-                    <p>
-                        I graduated Elementary School Grade 1 to Grade 6 in Khon Kaen Province and I graduated Secondary
-                        School 1 to Secondary 6 at Nong Bua Lamphu Province at Chalermprakiat School, Nong Bua Lamphu.
-                        Now I'm studying at the bachelor's degree level at Khon Kaen University, Nong Khai Campus.
+                    <h4 data-i18n="about.heading">ข้อมูลเกี่ยวกับตัวผม</h4>
+                    <p data-i18n="about.text">
+                        ฉันเรียนจบช่วงประถมที่จังหวัดขอนแก่น และเรียนต่อในระดับมัธยมที่โรงเรียนเฉลิมพระเกียรติ จังหวัดหนองบัวลำภู
+                        จากนั้นในช่วง ม.6 ฉันได้ลองเขียนเว็บและทำหุ่นยนต์ ทำให้สนใจ แล้วค่อยๆ เริ่มเขียนโค้ดจริงจังต่อเนื่องเรื่อยมาจนถึงทุกวันนี้
                     </p>
                 </div>
                 <div class="right-about">
                     <div class="about-item">
                         <div class="abt-text">
-                            <p class="large-text">2</p>
-                            <p class="small-text">Years <br /> Experience</p>
+                            <p class="large-text" id="code-exp">0</p>
+                            <p class="small-text" data-i18n-html="about.exp.label">ปี <br />ประสบการณ์เขียนโค้ด</p>
                         </div>
                     </div>
                     <div class="about-item">
                         <div class="abt-text">
                             <p class="large-text" id="age">20</p>
-                            <p class="small-text">Years <br /> Age</p>
+                            <p class="small-text" data-i18n-html="about.age.label">ปี <br />อายุ</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="about-stats">
-                <h4 class="stat-title">My Skills</h4>
+                <h4 class="stat-title" data-i18n="about.skills.title">ทักษะของผม</h4>
                 <div class="progress-bars">
                     <div class="progress-bar">
-                        <p class="prog-title">Programming</p>
+                        <p class="prog-title">PHP</p>
                         <div class="progress-con">
-                            <p class="prog-text">50%</p>
+                            <p class="prog-text">80%</p>
                             <div class="progress">
-                                <span class="Programming"></span>
+                                <span class="PHP"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <p class="prog-title">Laravel</p>
+                        <div class="progress-con">
+                            <p class="prog-text">30%</p>
+                            <div class="progress">
+                                <span class="Laravel"></span>
                             </div>
                         </div>
                     </div>
                     <div class="progress-bar">
                         <p class="prog-title">Database</p>
                         <div class="progress-con">
-                            <p class="prog-text">45%</p>
+                            <p class="prog-text">80%</p>
                             <div class="progress">
                                 <span class="Database"></span>
                             </div>
                         </div>
                     </div>
                     <div class="progress-bar">
+                        <p class="prog-title">Git</p>
+                        <div class="progress-con">
+                            <p class="prog-text">40%</p>
+                            <div class="progress">
+                                <span class="Git"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <p class="prog-title">Frontend (Angular)</p>
+                        <div class="progress-con">
+                            <p class="prog-text">30%</p>
+                            <div class="progress">
+                                <span class="Angular"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <p class="prog-title">Mobile (Flutter)</p>
+                        <div class="progress-con">
+                            <p class="prog-text">30%</p>
+                            <div class="progress">
+                                <span class="Flutter"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <p class="prog-title">.NET</p>
+                        <div class="progress-con">
+                            <p class="prog-text">60%</p>
+                            <div class="progress">
+                                <span class="DotNet"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <p class="prog-title">jQuery</p>
+                        <div class="progress-con">
+                            <p class="prog-text">60%</p>
+                            <div class="progress">
+                                <span class="jQuery"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
                         <p class="prog-title">Web Technology</p>
                         <div class="progress-con">
-                            <p class="prog-text">45%</p>
+                            <p class="prog-text">70%</p>
                             <div class="progress">
                                 <span class="Web_Technology"></span>
                             </div>
                         </div>
                     </div>
                     <div class="progress-bar">
-                        <p class="prog-title">Analysis and Design</p>
+                        <p class="prog-title" data-i18n="skill.analysis">การวิเคราะห์และออกแบบ</p>
                         <div class="progress-con">
-                            <p class="prog-text">80%</p>
+                            <p class="prog-text">65%</p>
                             <div class="progress">
                                 <span class="Analysis_and_Design"></span>
                             </div>
@@ -110,86 +226,90 @@
         </section>
         <section class="container" id="work">
             <div class="main-title">
-                <h2>
-                    My 
-                    <span>Work</span>
-                    <!-- <span class="bg-text">My Work</span> -->
+                <h2 data-i18n-html="work.title">
+                    ประวัติ
+                    <span>การทำงาน</span>
                 </h2>
             </div>
             <div class="timeline">
                 <div class="timeline-item left">
-                    <div class="tl-icon"><i class="fas fa-user-graduate"></i></div>
-                    <span class="tl-duration">2020 - 2024</span>
-                    <h5>ปริญญาตรี วิทยาการคอมพิวเตอร์ <span>Khon Kaen University</span></h5>
-                    <p>เกรดเฉลี่ย 3.56 เกียรตินิยมอันดับ 2 สำเร็จการศึกษาในปี 2024.</p>
+                    <div class="tl-icon"><i class="fas fa-laptop-code"></i></div>
+                    <span class="tl-duration" data-i18n="work.intern.duration">ฝึกงาน · 565 ชั่วโมง</span>
+                    <h5 data-i18n-html="work.intern.title">SOFT SQUARE GROUP <span>Professional Programmer Internship Program</span></h5>
+                    <p data-i18n="work.intern.p1">นักศึกษาฝึกงาน ตำแหน่ง Professional Programmer Internship Program</p>
+                    <p data-i18n="work.intern.p2">ใช้งาน SQL/PL, Angular, .NET Core และ Jasper Report</p>
+                    <p data-i18n="work.intern.p3">รวมระยะเวลาฝึกงาน 565 ชั่วโมง</p>
                 </div>
                 <div class="timeline-item right">
+                    <div class="tl-icon"><i class="fas fa-user-graduate"></i></div>
+                    <span class="tl-duration">2020 - 2024</span>
+                    <h5 data-i18n-html="work.edu.title">ปริญญาตรี วิทยาการคอมพิวเตอร์และสารสนเทศ <span>Khon Kaen University Nong Khai Campus</span></h5>
+                    <p data-i18n="work.edu.p1">เกรดเฉลี่ย 3.56 เกียรตินิยมอันดับ 2 สำเร็จการศึกษาในปี 2024</p>
+                </div>
+                <div class="timeline-item left">
                     <div class="tl-icon"><i class="fas fa-laptop-code"></i></div>
-                    <span class="tl-duration">2024 - ปัจจุบัน</span>
-                    <h5>OMC MLM Software <span>Programmer PHP</span></h5>
-                    <p>พัฒนา Web application ด้วยภาษา PHP และ jQuery</p>
-                    <p>ดูแลฐานข้อมูลด้วย SQL</p>
-                    <p>แก้งานตาม BRD (Business Requirements Document)</p>
+                    <span class="tl-duration" data-i18n="work.omc.duration">2024 - ปัจจุบัน</span>
+                    <h5 data-i18n-html="work.omc.title">OMC MLM Software <span>Programmer PHP</span></h5>
+                    <p data-i18n="work.omc.p1">พัฒนา Web application ด้วยภาษา PHP และ jQuery</p>
+                    <p data-i18n="work.omc.p2">ดูแลฐานข้อมูลด้วย SQL</p>
+                    <p data-i18n="work.omc.p3">แก้งานตาม BRD (Business Requirements Document)</p>
                 </div>
             </div>
         </section>
+        <!-- 
         <section class="container" id="blogs">
             <div class="blogs-content">
                 <div class="main-title">
-                    <h2>My <span>Hobby</span><span class="bg-text">My Hobby</span></h2>
+                    <h2 data-i18n-html="hobby.title">งานอดิเรก<span>ของผม</span><span class="bg-text">งานอดิเรกของผม</span></h2>
                 </div>
                 <div class="blogs">
                     <div class="blog">
                         <img src="img/rb.jpg" alt="">
                         <div class="blog-text">
-                            <h4>
-                                Play Game
-                            </h4>
-                            <p>
-                                Most of the games I've played are friend-focused and highly teamwork-based games like
-                                Dead By Daylight, Rainbow Six Siege, etc.
+                            <h4 data-i18n="hobby.game.title">เล่นเกม</h4>
+                            <p data-i18n="hobby.game.text">
+                                เกมส่วนใหญ่ที่ผมเล่นเป็นเกมที่เน้นเล่นกับเพื่อนและทำงานเป็นทีม
+                                เช่น Dead By Daylight, Rainbow Six Siege เป็นต้น
                             </p>
                         </div>
                     </div>
                     <div class="blog">
                         <img src="img/csp.jpg" alt="">
                         <div class="blog-text">
-                            <h4>
-                                Draw a picture
-                            </h4>
-                            <p>
-                                Drawing is part of calming the mind and focusing on drawing, which allows us to focus
-                                and increase concentration.
+                            <h4 data-i18n="hobby.draw.title">วาดภาพ</h4>
+                            <p data-i18n="hobby.draw.text">
+                                การวาดภาพช่วยให้จิตใจสงบและมีสมาธิมากขึ้น
+                                ทำให้เรามีสมาธิและเพิ่มความเข้มข้นในการทำสิ่งต่างๆ ได้ดีขึ้น
                             </p>
                         </div>
                     </div>
                     <div class="blog">
                         <img src="img/modeling.jpg" alt="">
                         <div class="blog-text">
-                            <h4>
-                                3D Modeling
-                            </h4>
-                            <p>
-                                Spinning the 3D model made me feel that it wasn't easy to do it. not easy
+                            <h4 data-i18n="hobby.model.title">สร้างโมเดล 3D</h4>
+                            <p data-i18n="hobby.model.text">
+                                เมื่อได้หมุนดูโมเดล 3D ที่ทำไว้ รู้สึกว่ามันไม่ใช่เรื่องง่ายเลย
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+        -->
+
         <section class="container contact" id="contact">
             <div class="contact-container">
                 <div class="main-title">
-                    <h2>Contact <span>Me</span><span class="bg-text">Contact</span></h2>
+                    <h2 data-i18n-html="contact.title">ติดต่อ<span>ผม</span><span class="bg-text">ติดต่อ</span></h2>
                 </div>
                 <div class="contact-content-con">
                     <div class="left-contact">
-                        <h4>Contact me here</h4>
+                        <h4 data-i18n="contact.heading">ติดต่อผมได้ที่นี่</h4>
                         <div class="contact-info">
                             <div class="contact-item">
                                 <div class="icon">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span>Location</span>
+                                    <span data-i18n="contact.location">ที่อยู่</span>
                                 </div>
                                 <p>
                                     : 111 Moo 1, Kranuan, Khon Kaen 40170
@@ -198,25 +318,25 @@
                             <div class="contact-item">
                                 <div class="icon">
                                     <i class="fas fa-envelope"></i>
-                                    <span>Email</span>
+                                    <span data-i18n="contact.email">อีเมล</span>
                                 </div>
                                 <p>
-                                    <span>: Surarampi@kkumail.com</span>
+                                    <span>: Surarampi@kkumail.com, goodto.GG@gmail.com</span>
                                 </p>
                             </div>
                             <div class="contact-item">
                                 <div class="icon">
                                     <i class="fas fa-user-graduate"></i>
-                                    <span>Education</span>
+                                    <span data-i18n="contact.education">การศึกษา</span>
                                 </div>
                                 <p>
-                                    <span>: Khon Kaen University, Nong Khai Campus</span>
+                                    <span>: Khon Kaen University Nong Khai Campus</span>
                                 </p>
                             </div>
                             <div class="contact-item">
                                 <div class="icon">
                                     <i class="fa fa-phone"></i>
-                                    <span>Mobile Number</span>
+                                    <span data-i18n="contact.phone">เบอร์โทรศัพท์</span>
                                 </div>
                                 <p>
                                     <span>: 061-125-2572</span>
@@ -225,10 +345,10 @@
                             <div class="contact-item">
                                 <div class="icon">
                                     <i class="fas fa-globe-africa"></i>
-                                    <span>Languages</span>
+                                    <span data-i18n="contact.languages">ภาษา</span>
                                 </div>
                                 <p>
-                                    <span>: Thai, English(Little)</span>
+                                    <span data-i18n="contact.languages.value">: ไทย, อังกฤษ (พอเข้าใจนิดหน่อย)</span>
                                 </p>
                             </div>
                         </div>
@@ -258,15 +378,22 @@
         <div class="control" data-id="work">
             <i class="fa fa-briefcase"></i>
         </div>
-        <div class="control" data-id="blogs">
-            <i class="far fa-newspaper"></i>
-        </div>
+        <!--  
+            <div class="control" data-id="blogs">
+                <i class="far fa-newspaper"></i>
+            </div>
+        -->
         <div class="control" data-id="contact">
             <i class="fas fa-envelope-open"></i>
         </div>
     </div>
-    <div class="theme-btn">
-        <i class="fas fa-adjust"></i>
+    <div class="fixed-actions">
+        <button type="button" class="lang-btn" aria-label="Switch language">
+            <span class="lang-btn__text">EN</span>
+        </button>
+        <div class="theme-btn">
+            <i class="fas fa-adjust"></i>
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
