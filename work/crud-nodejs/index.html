@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Mini — Node.js</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --border: #334155;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --accent: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .wrap {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        h1 {
+            margin: 0 0 0.25rem;
+            font-size: 1.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-bottom: 1.25rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 0.25rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            margin-bottom: 0.75rem;
+            padding: 0.55rem 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font: inherit;
+        }
+
+        textarea {
+            min-height: 72px;
+            resize: vertical;
+        }
+
+        .row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #052e16;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 0.6rem 0.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .actions button {
+            padding: 0.35rem 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        #msg {
+            min-height: 1.25rem;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        #msg.error {
+            color: var(--danger);
+        }
+
+        .mode-badge {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.45rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .mode-badge--demo {
+            background: rgba(234, 179, 8, 0.15);
+            color: #facc15;
+        }
+
+        .mode-badge--server {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .api-status {
+            margin: 0 0 1rem;
+            padding: 0.75rem 0.9rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .api-status code {
+            background: var(--bg);
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            color: var(--text);
+        }
+
+        .api-status a {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .api-status strong {
+            color: var(--text);
+        }
+
+        .connect-btn {
+            margin-bottom: 1rem;
+            padding: 0.55rem 1rem;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--accent);
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .connect-btn:hover {
+            background: rgba(34, 197, 94, 0.12);
+        }
+
+        .img-preview {
+            display: block;
+            max-width: 140px;
+            max-height: 140px;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
+        .thumb {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .no-img {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .img-actions {
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <a class="back-link" href="../index.html">← กลับหน้าเลือกโปรเจกต์</a>
+        <p id="mode-badge" class="mode-badge mode-badge--demo">กำลังโหลด...</p>
+        <div id="api-status" class="api-status"></div>
+        <button type="button" class="connect-btn" id="connect-backend">เชื่อม Backend (localhost:3000)</button>
+        <h1>Items CRUD</h1>
+        <span class="badge">Node.js · MVC</span>
+
+        <div class="card">
+            <h2 style="margin:0 0 0.75rem;font-size:1rem;" id="form-title">เพิ่มรายการ</h2>
+            <form id="item-form">
+                <input type="hidden" id="edit-id" value="">
+                <label for="name">ชื่อ *</label>
+                <input type="text" id="name" required placeholder="ชื่อรายการ">
+                <label for="description">รายละเอียด</label>
+                <textarea id="description" placeholder="คำอธิบาย (ไม่บังคับ)"></textarea>
+                <label for="image-file">รูปภาพ</label>
+                <input type="file" id="image-file" accept="image/*">
+                <img id="image-preview" class="img-preview" alt="" hidden>
+                <div class="row img-actions">
+                    <button type="button" class="btn-ghost" id="clear-image">ลบรูป</button>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn-primary" id="submit-btn">บันทึก</button>
+                    <button type="button" class="btn-ghost" id="cancel-btn" hidden>ยกเลิก</button>
+                </div>
+            </form>
+            <p id="msg"></p>
+        </div>
+
+        <div class="card">
+            <h2 style="margin:0 0 0.75rem;font-size:1rem;">รายการทั้งหมด</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>รูป</th>
+                        <th>ชื่อ</th>
+                        <th>รายละเอียด</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="items-body">
+                    <tr>
+                        <td colspan="5">กำลังโหลด...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="../crud-shared/crud-ui.js" data-storage-key="crud-nodejs" data-project="Node.js" data-port="3000"></script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "CRUD .NET (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/work/crud-dotnet/bin/Debug/net10.0/CrudDotNet.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/work/crud-dotnet",
+      "stopAtEntry": false,
+      "console": "integratedTerminal",
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s"
+      }
+    },
+    {
+      "name": "Attach to .NET (port 5000)",
+      "type": "coreclr",
+      "request": "attach",
+      "processName": "CrudDotNet"
+    }
+  ]
+}

@@ -1,2 +1,6 @@
 # PHPStorm
 .idea
+
+# CRUD uploaded images (repo root)
+uploads/*
+!uploads/.gitkeep
