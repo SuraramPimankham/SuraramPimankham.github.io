@@ -1,6 +1,10 @@
 # PHPStorm
 .idea
 
-# CRUD uploaded images (repo root)
-uploads/*
-!uploads/.gitkeep
+# LearningCode
+LearningCode/data/*.db
+LearningCode/data/*.db-*
+LearningCode/uploads/images/*
+LearningCode/uploads/files/*
+!LearningCode/uploads/images/.gitkeep
+!LearningCode/uploads/files/.gitkeep

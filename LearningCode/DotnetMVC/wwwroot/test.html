@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tester — LearningCode</title>
+    <style>
+        :root { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#f1f5f9; --muted:#94a3b8; --accent:#8b5cf6; --ok:#22c55e; --danger:#ef4444; }
+        * { box-sizing: border-box; }
+        body { margin:0; font-family: ui-monospace, Consolas, monospace; background:var(--bg); color:var(--text); }
+        .wrap { max-width:1100px; margin:0 auto; padding:1.25rem; }
+        h1 { font-family: system-ui,sans-serif; margin:0 0 .2rem; font-size:1.35rem; }
+        .sub { font-family: system-ui,sans-serif; color:var(--muted); margin:0 0 1rem; font-size:.88rem; }
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+        @media (max-width:800px) { .grid { grid-template-columns:1fr; } }
+        .card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1rem; }
+        label { display:block; font-family: system-ui,sans-serif; font-size:.8rem; color:var(--muted); margin-bottom:.3rem; }
+        select, textarea, input[type=text], input[type=number] { width:100%; padding:.5rem .65rem; border:1px solid var(--border); border-radius:8px; background:var(--bg); color:var(--text); font:inherit; }
+        textarea { min-height:280px; resize:vertical; line-height:1.45; }
+        #json-out { min-height:280px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:.65rem; overflow:auto; white-space:pre-wrap; word-break:break-word; }
+        .row { display:flex; gap:.6rem; flex-wrap:wrap; align-items:end; margin-bottom:.75rem; }
+        .row > div { flex:1; min-width:140px; }
+        .filter-row { display:none; gap:.5rem; flex-wrap:wrap; margin-bottom:.75rem; padding:.65rem .75rem; background:var(--bg); border:1px solid var(--border); border-radius:8px; }
+        .filter-row.show { display:flex; }
+        .filter-row .f { flex:1; min-width:100px; }
+        .filter-row input { width:100%; padding:.4rem .55rem; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text); font:inherit; font-size:.82rem; }
+        .id-row { display:none; align-items:end; gap:.6rem; margin-bottom:.75rem; padding:.65rem .75rem; background:var(--bg); border:1px solid var(--border); border-radius:8px; }
+        .id-row.show { display:flex; flex-wrap:wrap; }
+        .id-row .id-field { flex:0 0 120px; }
+        .id-row .id-hint { flex:1; min-width:180px; font-family:system-ui,sans-serif; font-size:.8rem; color:var(--muted); margin:0; padding-bottom:.45rem; }
+        .url { font-size:.85rem; color:var(--muted); margin:.35rem 0 .75rem; word-break:break-all; font-family:system-ui,sans-serif; }
+        .url .id-badge { display:inline-block; padding:.1rem .45rem; border-radius:6px; background:rgba(139,92,246,.25); color:#c4b5fd; font-weight:700; }
+        .json-wrap.hidden { opacity:.45; pointer-events:none; }
+        .json-note { font-family:system-ui,sans-serif; font-size:.78rem; color:var(--muted); margin:-.25rem 0 .5rem; }
+        button { padding:.55rem 1.1rem; border:none; border-radius:8px; font-family: system-ui,sans-serif; font-weight:700; cursor:pointer; background:var(--accent); color:#fff; }
+        button:disabled { opacity:.5; cursor:not-allowed; }
+        .status { font-family: system-ui,sans-serif; font-size:.85rem; margin-bottom:.5rem; }
+        .status.ok { color:var(--ok); }
+        .status.err { color:var(--danger); }
+        .files { font-family: system-ui,sans-serif; font-size:.82rem; color:var(--muted); margin-top:.5rem; }
+        .files input { margin-top:.25rem; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <p class="sub" style="font-family:system-ui,sans-serif"><a href="/" style="color:#8b5cf6">← Hub</a></p>
+    <h1>API Tester</h1>
+    <p class="sub">เลือก Model → REST API → ระบุ <strong>ID</strong> (ถ้ามี) → แก้ JSON → Send</p>
+
+    <div class="card" style="margin-bottom:1rem;">
+        <div class="row">
+            <div>
+                <label for="model">MODEL</label>
+                <select id="model"></select>
+            </div>
+            <div>
+                <label for="api">REST API</label>
+                <select id="api"></select>
+            </div>
+            <div style="flex:0;">
+                <button id="send" type="button">Send</button>
+            </div>
+        </div>
+        <div class="filter-row" id="filter-row"></div>
+        <div class="id-row" id="id-row">
+            <div class="id-field">
+                <label for="record-id">ID ที่จะแก้/ลบ/ดู</label>
+                <input type="number" id="record-id" min="1" value="1" list="id-list">
+                <datalist id="id-list"></datalist>
+            </div>
+            <p class="id-hint" id="id-hint">ใช้ช่องนี้กำหนด {id} ใน URL — ไม่ต้องพึ่ง JSON</p>
+            <button type="button" id="load-ids" style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:.45rem .8rem;">โหลด ID ทั้งหมด</button>
+        </div>
+        <div class="url" id="url-preview">URL: —</div>
+        <div class="files" id="file-row" hidden>
+            <label>ไฟล์แนบ (POST/PUT — ไม่ใส่ใน JSON)</label>
+            <div id="file-inputs"></div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card json-wrap" id="json-wrap">
+            <label for="json-in">JSON INPUT</label>
+            <p class="json-note" id="json-note"></p>
+            <textarea id="json-in" spellcheck="false">{}</textarea>
+        </div>
+        <div class="card">
+            <label>JSON OUTPUT</label>
+            <div class="status" id="status">ยังไม่ได้ส่ง request</div>
+            <pre id="json-out">{}</pre>
+        </div>
+    </div>
+</div>
+<script>
+let manifest = null;
+let fieldSchema = null;
+
+const $ = id => document.getElementById(id);
+
+function sampleFromSchema(schema) {
+    if (!schema?.fields) return {};
+    const obj = {};
+    for (const f of schema.fields) {
+        if (f.storage === 'file') continue;
+        if (f.default != null) obj[f.name] = f.default;
+        else if (f.type === 'select' && f.options?.length) obj[f.name] = f.options[0];
+        else if (f.required) obj[f.name] = f.type === 'textarea' ? '' : `ตัวอย่าง ${f.label}`;
+        else obj[f.name] = '';
+    }
+    return obj;
+}
+
+function currentModel() {
+    const name = $('model').value;
+    return manifest.models.find(m => m.name === name);
+}
+
+function currentOp() {
+    const m = currentModel();
+    const idx = parseInt($('api').value, 10);
+    return m?.operations[idx];
+}
+
+function updateApiList() {
+    const m = currentModel();
+    $('api').innerHTML = m.operations.map((op, i) =>
+        `<option value="${i}">${op.method} ${op.path} — ${op.label.split('—').pop().trim()}</option>`
+    ).join('');
+    onApiChange();
+}
+
+function getFileFields(schema) {
+    return (schema?.fields || []).filter(f => f.storage === 'file');
+}
+
+function clearFormKey(name) {
+    return 'clear' + name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+function renderFileInputs(schema) {
+    const container = $('file-inputs');
+    const row = $('file-row');
+    if (!container || !schema?.fields) return;
+    const fields = getFileFields(schema);
+    if (row) row.hidden = fields.length === 0;
+    container.innerHTML = fields.map(f => {
+        const accept = f.accept ? ` accept="${f.accept}"` : '';
+        const maxMb = f.maxSizeMb || (f.type === 'image' ? 2 : 10);
+        const label = `${f.label} <small>(${f.name})</small> — สูงสุด ${maxMb} MB`;
+        return `<div><label>${label}</label><input type="file" id="file-${f.name}" data-file="${f.name}"${accept}></div>`;
+    }).join('');
+}
+
+function getRecordId() {
+    const n = parseInt($('record-id').value, 10);
+    return Number.isFinite(n) && n > 0 ? n : 1;
+}
+
+function supportsFilters(op) {
+    return op?.method === 'GET' && !op?.needsId && !!currentModel()?.endpoint;
+}
+
+function isFilterable(f) {
+    if (f.filterable === false) return false;
+    if (f.filterable === true) return true;
+    return f.storage === 'column' || f.storage === 'extra';
+}
+
+function renderFilterInputs(schema) {
+    const container = $('filter-row');
+    if (!container || !schema?.fields) return;
+    const fields = schema.fields.filter(isFilterable);
+    container.innerHTML = fields.map(f => {
+        const label = `${f.label} <small>(${f.name})</small>`;
+        if (f.type === 'select' && f.options?.length) {
+            const opts = f.options.map(o => `<option value="${o}">${o}</option>`).join('');
+            return `<div class="f"><label>${label}</label><select data-filter="${f.name}"><option value="">—</option>${opts}</select></div>`;
+        }
+        const ph = f.placeholder || (f.type === 'select' ? 'exact' : 'contains');
+        return `<div class="f"><label>${label}</label><input type="text" data-filter="${f.name}" placeholder="${ph}"></div>`;
+    }).join('');
+    container.querySelectorAll('[data-filter]').forEach(el => el.oninput = updateUrlPreview);
+}
+
+function getFilterQuery() {
+    const params = new URLSearchParams();
+    document.querySelectorAll('[data-filter]').forEach(el => {
+        const v = el.value.trim();
+        if (v) params.set(el.dataset.filter, v);
+    });
+    const qs = params.toString();
+    return qs ? `?${qs}` : '';
+}
+
+function updateUrlPreview() {
+    const op = currentOp();
+    if (!op) return;
+    const url = buildUrl(op);
+    const el = $('url-preview');
+    if (op.needsId) {
+        const id = getRecordId();
+        const [base, rest] = url.split(String(id));
+        el.innerHTML = `URL: <strong>${op.method}</strong> ${base}<span class="id-badge">${id}</span>${rest || ''}`;
+    } else if (supportsFilters(op) && url.includes('?')) {
+        el.innerHTML = `URL: <strong>${op.method}</strong> ${url.replace('?', ' <span class="id-badge">?</span>')}`;
+    } else {
+        el.textContent = `URL: ${op.method} ${url}`;
+    }
+}
+
+function onApiChange() {
+    const op = currentOp();
+    if (!op) return;
+
+    $('id-row').classList.toggle('show', !!op.needsId);
+    $('filter-row').classList.toggle('show', supportsFilters(op));
+    if (supportsFilters(op) && fieldSchema) renderFilterInputs(fieldSchema);
+    $('id-hint').textContent = op.needsId
+        ? `กำลังจะ ${op.method} สมาชิก ID = ${getRecordId()}`
+        : '';
+
+    const showFiles = op.hasBody && currentModel().endpoint && getFileFields(fieldSchema).length > 0;
+    $('file-row').hidden = !showFiles;
+    if (showFiles && fieldSchema) renderFileInputs(fieldSchema);
+
+    const needsJson = op.hasBody;
+    $('json-wrap').classList.toggle('hidden', !needsJson);
+    $('json-note').textContent = needsJson
+        ? 'ข้อมูล Member — ไม่ต้องใส่ id (ใช้ช่อง ID ด้านบน)'
+        : (op.needsId ? 'GET/DELETE ใช้แค่ช่อง ID'
+        : (supportsFilters(op) ? 'GET + filter ใช้ช่องด้านบน (?role=...)' : ''));
+
+    if (needsJson && fieldSchema && currentModel().schema) {
+        let sample = { ...sampleFromSchema(fieldSchema) };
+        if (op.method === 'PUT') {
+            for (const f of getFileFields(fieldSchema)) sample[clearFormKey(f.name)] = false;
+        }
+        $('json-in').value = JSON.stringify(sample, null, 2);
+    } else {
+        $('json-in').value = '{}';
+    }
+
+    updateUrlPreview();
+}
+
+function buildUrl(op) {
+    let path = op.path;
+    if (op.needsId) path = path.replace('{id}', getRecordId());
+    if (supportsFilters(op)) path += getFilterQuery();
+    return path;
+}
+
+async function loadIdList() {
+    const base = currentModel()?.endpoint;
+    if (!base) return;
+    try {
+        const res = await fetch(base);
+        const data = await res.json();
+        if (!Array.isArray(data)) return;
+        const dl = $('id-list');
+        dl.innerHTML = data.map(m => {
+            const label = m.name ? `${m.id} — ${m.name}` : String(m.id);
+            return `<option value="${m.id}" label="${label}">`;
+        }).join('');
+        if (data.length && !$('record-id').value) $('record-id').value = data[0].id;
+        updateUrlPreview();
+        setOut(`โหลด ID แล้ว (${data.length} รายการ)`, '{}', false);
+    } catch (e) {
+        setOut('โหลด ID ไม่ได้', e.message, true);
+    }
+}
+
+async function send() {
+    const op = currentOp();
+    if (!op) return;
+
+    const url = buildUrl(op);
+    updateUrlPreview();
+    $('send').disabled = true;
+
+    try {
+        const opts = { method: op.method };
+        if (op.hasBody) {
+            let body = {};
+            try {
+                const raw = $('json-in').value.trim();
+                if (raw) body = JSON.parse(raw);
+            } catch (e) {
+                setOut('JSON Input ไม่ถูกต้อง: ' + e.message, null, true);
+                return;
+            }
+            const fd = new FormData();
+            for (const [k, v] of Object.entries(body)) {
+                if (k === 'id') continue;
+                if (typeof v === 'boolean' || typeof v === 'number') fd.append(k, String(v));
+                else if (v != null && v !== '') fd.append(k, v);
+            }
+            for (const f of getFileFields(fieldSchema)) {
+                const file = document.getElementById(`file-${f.name}`)?.files[0];
+                if (file) fd.append(f.name, file);
+            }
+            opts.body = fd;
+        }
+
+        const res = await fetch(url, opts);
+        const text = await res.text();
+        let data;
+        try { data = JSON.parse(text); } catch { data = text; }
+        const out = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+        setOut(`${res.status} ${res.statusText}`, out, !res.ok);
+    } catch (e) {
+        setOut('Request ล้มเหลว', e.message, true);
+    } finally {
+        $('send').disabled = false;
+    }
+}
+
+function setOut(status, body, err) {
+    const st = $('status');
+    st.textContent = status;
+    st.className = 'status ' + (err ? 'err' : 'ok');
+    $('json-out').textContent = body ?? '{}';
+}
+
+function defaultModels(m) {
+    const entity = m?.fields?.entity || 'Member';
+    const base = m?.api?.members || '/api/members';
+    return [
+        {
+            name: entity,
+            endpoint: base,
+            schema: m?.schema || '/schema',
+            operations: [
+                { method: 'GET', path: base, label: 'GET — สมาชิกทั้งหมด', needsId: false, hasBody: false, hasFilters: true },
+                { method: 'GET', path: `${base}/{id}`, label: 'GET — รายการเดียว', needsId: true, hasBody: false },
+                { method: 'POST', path: base, label: 'POST — สร้าง', needsId: false, hasBody: true },
+                { method: 'PUT', path: `${base}/{id}`, label: 'PUT — แก้ไข', needsId: true, hasBody: true },
+                { method: 'DELETE', path: `${base}/{id}`, label: 'DELETE — ลบ', needsId: true, hasBody: false }
+            ]
+        },
+        {
+            name: 'System',
+            endpoint: null,
+            schema: null,
+            operations: [
+                { method: 'GET', path: '/', label: 'GET — hub', needsId: false, hasBody: false },
+                { method: 'GET', path: '/manifest', label: 'GET — manifest', needsId: false, hasBody: false },
+                { method: 'GET', path: '/schema', label: 'GET — schema', needsId: false, hasBody: false }
+            ]
+        }
+    ];
+}
+
+async function init() {
+    const res = await fetch('/manifest');
+    if (!res.ok) throw new Error(`HTTP ${res.status} — รัน dotnet run ก่อน`);
+    manifest = await res.json();
+    if (!manifest.models?.length) manifest.models = defaultModels(manifest);
+    fieldSchema = manifest.fields;
+    renderFilterInputs(fieldSchema);
+    renderFileInputs(fieldSchema);
+
+    $('model').innerHTML = manifest.models.map(m =>
+        `<option value="${m.name}">${m.name}</option>`
+    ).join('');
+
+    $('model').onchange = updateApiList;
+    $('api').onchange = onApiChange;
+    $('record-id').oninput = () => { updateUrlPreview(); const op = currentOp(); if (op?.needsId) $('id-hint').textContent = `กำลังจะ ${op.method} สมาชิก ID = ${getRecordId()}`; };
+    $('load-ids').onclick = loadIdList;
+    $('send').onclick = send;
+
+    updateApiList();
+    setOut('พร้อมทดสอบ', '{}', false);
+}
+
+init().catch(e => setOut('โหลด manifest ไม่ได้', e.message, true));
+</script>
+</body>
+</html>

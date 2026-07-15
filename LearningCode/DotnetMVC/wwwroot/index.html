@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DotnetMVC — Hub</title>
+    <style>
+        :root { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#f1f5f9; --muted:#94a3b8; --accent:#8b5cf6; --green:#22c55e; --blue:#60a5fa; --yellow:#fbbf24; --red:#f87171; }
+        * { box-sizing: border-box; }
+        body { margin:0; font-family: system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+        .wrap { max-width:900px; margin:0 auto; padding:2rem 1.25rem 3rem; }
+        h1 { margin:0; font-size:1.75rem; }
+        h2 { font-size:1.05rem; margin:0 0 .6rem; }
+        h3 { font-size:.92rem; margin:1rem 0 .4rem; color:#c4b5fd; }
+        .badge { display:inline-block; margin-top:.5rem; padding:.2rem .55rem; border-radius:6px; font-size:.75rem; font-weight:600; background:rgba(139,92,246,.2); color:#c4b5fd; }
+        .sub { color:var(--muted); margin:.75rem 0 1.5rem; font-size:.95rem; }
+        .grid { display:grid; gap:.75rem; }
+        .grid-2 { grid-template-columns:1fr 1fr; }
+        @media (max-width:640px) { .grid-2 { grid-template-columns:1fr; } }
+        a.card { display:block; text-decoration:none; color:inherit; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; transition:border-color .15s, transform .15s; }
+        a.card:hover { border-color:var(--accent); transform:translateY(-1px); }
+        a.card strong { display:block; font-size:1rem; margin-bottom:.2rem; }
+        a.card span { color:var(--muted); font-size:.85rem; }
+        a.card .path { font-family: ui-monospace, Consolas, monospace; font-size:.78rem; color:#a78bfa; margin-top:.35rem; }
+        .section { margin:2rem 0 .6rem; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+        .api-list { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.75rem 1rem; font-family: ui-monospace, Consolas, monospace; font-size:.82rem; }
+        .api-list div { padding:.35rem 0; border-bottom:1px solid var(--border); }
+        .api-list div:last-child { border:none; }
+        .method { display:inline-block; width:4.5rem; font-weight:700; }
+        .method.get { color:var(--green); }
+        .method.post { color:var(--blue); }
+        .method.put { color:var(--yellow); }
+        .method.delete { color:var(--red); }
+        .status { margin-top:1rem; font-size:.85rem; color:var(--muted); }
+        .status.ok { color:var(--green); }
+        .status.err { color:var(--red); }
+        pre, code { font-family: ui-monospace, Consolas, monospace; }
+        pre { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:.85rem 1rem; font-size:.76rem; overflow:auto; line-height:1.45; margin:.5rem 0; }
+        code { font-size:.82em; color:#c4b5fd; }
+        .panel { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; margin-bottom:.65rem; }
+        .panel p, .panel ul, .panel ol { margin:.4rem 0; font-size:.9rem; color:var(--muted); }
+        .panel ul, .panel ol { padding-left:1.2rem; }
+        .panel li { margin:.25rem 0; }
+        .panel strong { color:var(--text); }
+        details { background:var(--card); border:1px solid var(--border); border-radius:12px; margin-bottom:.55rem; overflow:hidden; }
+        details[open] { border-color:rgba(139,92,246,.45); }
+        summary { cursor:pointer; padding:.85rem 1rem; font-weight:600; font-size:.92rem; list-style:none; display:flex; align-items:center; gap:.5rem; }
+        summary::-webkit-details-marker { display:none; }
+        summary::before { content:'▸'; color:var(--accent); font-size:.8rem; transition:transform .15s; }
+        details[open] summary::before { transform:rotate(90deg); }
+        .detail-body { padding:0 1rem 1rem; border-top:1px solid var(--border); font-size:.88rem; color:var(--muted); }
+        .detail-body p { margin:.55rem 0; }
+        .tag { display:inline-block; padding:.1rem .45rem; border-radius:5px; font-size:.72rem; font-weight:700; margin-right:.25rem; }
+        .tag.easy { background:rgba(34,197,94,.15); color:var(--green); }
+        .tag.mid { background:rgba(251,191,36,.15); color:var(--yellow); }
+        .tag.hard { background:rgba(248,113,113,.15); color:var(--red); }
+        table { width:100%; border-collapse:collapse; font-size:.82rem; margin:.6rem 0; }
+        th, td { border:1px solid var(--border); padding:.45rem .6rem; text-align:left; }
+        th { color:var(--text); background:rgba(15,23,42,.5); }
+        .flow { font-size:.74rem; color:var(--muted); }
+        .arrow { color:var(--accent); }
+        .file-link { color:#a78bfa; }
+        .toc { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1rem; }
+        .toc a { font-size:.78rem; padding:.3rem .6rem; border-radius:6px; background:rgba(139,92,246,.12); color:#c4b5fd; text-decoration:none; }
+        .toc a:hover { background:rgba(139,92,246,.25); }
+        .table-wrap { overflow-x:auto; margin:.6rem 0; }
+        .table-wrap table { min-width:640px; }
+        td code, th code { font-size:.78rem; }
+        .ex { color:var(--muted); font-size:.8rem; }
+        .yes { color:var(--green); }
+        .no { color:var(--red); }
+        .mono { font-family: ui-monospace, Consolas, monospace; font-size:.78rem; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <h1>DotnetMVC</h1>
+    <span class="badge">ASP.NET Core MVC · SQLite · REST API</span>
+    <p class="sub">ฝึก CRUD + REST API — เลือกเครื่องมือด้านล่าง หรืออ่านคู่มือเพิ่ม API</p>
+
+    <div class="section">เครื่องมือทดสอบ</div>
+    <div class="grid">
+        <a class="card" href="/test.html">
+            <strong>API Tester</strong>
+            <span>เลือก Model · REST API · Filter · ไฟล์แนบ · JSON</span>
+            <div class="path">/test.html</div>
+        </a>
+    </div>
+
+    <div class="section">REST API ปัจจุบัน</div>
+    <div class="api-list">
+        <div><span class="method get">GET</span> /api/members — ทั้งหมด</div>
+        <div><span class="method get">GET</span> /api/members?role=admin&amp;status=active — filter</div>
+        <div><span class="method get">GET</span> /api/members/{id} — สมาชิกคนเดียว</div>
+        <div><span class="method post">POST</span> /api/members — สร้าง (multipart)</div>
+        <div><span class="method put">PUT</span> /api/members/{id} — แก้ไข</div>
+        <div><span class="method delete">DELETE</span> /api/members/{id} — ลบ</div>
+    </div>
+
+    <div class="section">JSON Endpoints</div>
+    <div class="grid grid-2">
+        <a class="card" href="/manifest" target="_blank">
+            <strong>Manifest</strong>
+            <span>โปรเจกต์ + models + schema (test.html ใช้ตัวนี้)</span>
+            <div class="path">/manifest</div>
+        </a>
+        <a class="card" href="/schema" target="_blank">
+            <strong>Schema</strong>
+            <span>โครงสร้างฟิลด์จาก fields.json</span>
+            <div class="path">/schema</div>
+        </a>
+    </div>
+
+    <!-- ===== อ้างอิง Data Type ===== -->
+    <div class="section">อ้างอิง — Data Type ทุกแบบ</div>
+
+    <nav class="toc">
+        <a href="#types">type</a>
+        <a href="#storage">storage</a>
+        <a href="#system">system fields</a>
+        <a href="#schema-props">properties</a>
+        <a href="#filter-types">filter</a>
+        <a href="#example-json">ตัวอย่าง JSON</a>
+    </nav>
+
+    <div class="panel" id="types">
+        <h2>ตาราง <code>type</code> — ชนิดข้อมูลใน fields.json</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>type</th>
+                    <th>ความหมาย</th>
+                    <th>C# / DB</th>
+                    <th>JSON response</th>
+                    <th>POST body</th>
+                    <th>Filter</th>
+                    <th>ตัวอย่าง fields.json</th>
+                </tr>
+                <tr>
+                    <td><code>text</code></td>
+                    <td>ข้อความสั้น</td>
+                    <td><code>string?</code> · SQLite TEXT</td>
+                    <td><code>"email": "a@b.com"</code></td>
+                    <td>form field ข้อความ</td>
+                    <td class="yes">contains (LIKE %…%)</td>
+                    <td class="ex"><code>name, email, phone, department</code></td>
+                </tr>
+                <tr>
+                    <td><code>textarea</code></td>
+                    <td>ข้อความยาว</td>
+                    <td><code>string?</code> · SQLite TEXT</td>
+                    <td><code>"bio": "นักพัฒนา…"</code></td>
+                    <td>form field ข้อความ</td>
+                    <td class="yes">contains</td>
+                    <td class="ex"><code>bio</code></td>
+                </tr>
+                <tr>
+                    <td><code>select</code></td>
+                    <td>เลือกจาก options</td>
+                    <td><code>string</code> · SQLite TEXT</td>
+                    <td><code>"role": "admin"</code></td>
+                    <td>form field ข้อความ (ค่าใน options)</td>
+                    <td class="yes">exact (=)</td>
+                    <td class="ex"><code>role, status</code> + <code>options[]</code></td>
+                </tr>
+                <tr>
+                    <td><code>image</code></td>
+                    <td>รูปภาพ</td>
+                    <td>path ใน column/extra · ไฟล์บน disk</td>
+                    <td><code>"photo": "/uploads/images/…"</code></td>
+                    <td>multipart <code>photo</code> (ไม่ใส่ JSON)</td>
+                    <td class="no">ไม่ filter</td>
+                    <td class="ex"><code>photo</code> + <code>accept, maxSizeMb</code></td>
+                </tr>
+                <tr>
+                    <td><code>file</code></td>
+                    <td>ไฟล์แนบ</td>
+                    <td>path + ชื่อไฟล์ · disk</td>
+                    <td><code>"file": "/uploads/files/…"</code></td>
+                    <td>multipart <code>file</code></td>
+                    <td class="no">ไม่ filter</td>
+                    <td class="ex"><code>file, cv</code> + <code>maxSizeMb</code></td>
+                </tr>
+            </table>
+        </div>
+        <p class="ex">หมายเหตุ: <code>type</code> ใช้กับ UI + validation — ค่าจริงใน DB ส่วนใหญ่เป็น <code>string</code> ยกเว้น system field (id, วันที่)</p>
+    </div>
+
+    <div class="panel" id="storage">
+        <h2>ตาราง <code>storage</code> — เก็บข้อมูลที่ไหน</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>storage</th>
+                    <th>เก็บที่</th>
+                    <th>แก้ fields.json อย่างเดียว?</th>
+                    <th>Filter auto?</th>
+                    <th>ตัวอย่าง</th>
+                </tr>
+                <tr>
+                    <td><code>column</code></td>
+                    <td>คอลัมน์ใน <code>Member</code> + SQLite</td>
+                    <td class="no">ต้องมี property ใน Member.cs</td>
+                    <td class="yes">ใช่ (ถ้าไม่ตั้ง filterable: false)</td>
+                    <td class="ex">name, email, role, bio</td>
+                </tr>
+                <tr>
+                    <td><code>extra</code></td>
+                    <td><code>Member.ExtraJson</code> (JSON ใน DB)</td>
+                    <td class="yes">ใช่ — ไม่แตะ C#</td>
+                    <td class="yes">ใช่ (filter ใน memory)</td>
+                    <td class="ex">department, status, nickname</td>
+                </tr>
+                <tr>
+                    <td><code>file</code></td>
+                    <td>disk <code>../uploads/</code> + path ใน column/extra</td>
+                    <td class="yes">ใช่</td>
+                    <td class="no">ไม่</td>
+                    <td class="ex">photo → ImagePath · file → FilePath · cv → ExtraJson</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel" id="system">
+        <h2>ตาราง System Fields — ไม่ใส่ใน fields.json</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>ฟิลด์ API</th>
+                    <th>C# type</th>
+                    <th>SQLite</th>
+                    <th>ตัวอย่างค่า</th>
+                    <th>มาจาก</th>
+                </tr>
+                <tr>
+                    <td><code>id</code></td>
+                    <td><code>int</code></td>
+                    <td>INTEGER PK</td>
+                    <td class="mono">1</td>
+                    <td>auto increment</td>
+                </tr>
+                <tr>
+                    <td><code>imagePath</code></td>
+                    <td><code>string?</code></td>
+                    <td>TEXT</td>
+                    <td class="mono">/uploads/images/member-1-….jpg</td>
+                    <td>ฟิลด์ <code>photo</code></td>
+                </tr>
+                <tr>
+                    <td><code>filePath</code></td>
+                    <td><code>string?</code></td>
+                    <td>TEXT</td>
+                    <td class="mono">/uploads/files/member-1-….pdf</td>
+                    <td>ฟิลด์ <code>file</code></td>
+                </tr>
+                <tr>
+                    <td><code>fileName</code></td>
+                    <td><code>string?</code></td>
+                    <td>TEXT</td>
+                    <td class="mono">resume.pdf</td>
+                    <td>ชื่อไฟล์เดิมของ <code>file</code></td>
+                </tr>
+                <tr>
+                    <td><code>createdAt</code></td>
+                    <td><code>DateTime</code></td>
+                    <td>TEXT (ISO)</td>
+                    <td class="mono">2026-05-28T10:00:00Z</td>
+                    <td>ตอน POST</td>
+                </tr>
+                <tr>
+                    <td><code>updatedAt</code></td>
+                    <td><code>DateTime</code></td>
+                    <td>TEXT (ISO)</td>
+                    <td class="mono">2026-05-28T12:30:00Z</td>
+                    <td>ทุกครั้งที่แก้</td>
+                </tr>
+                <tr>
+                    <td><code>clearPhoto</code> / <code>clearFile</code></td>
+                    <td><code>bool</code> (form only)</td>
+                    <td>—</td>
+                    <td class="mono">true / false</td>
+                    <td>PUT เท่านั้น — ลบไฟล์ (dynamic ตามชื่อฟิลด์ file)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel" id="schema-props">
+        <h2>ตาราง Properties ใน fields.json</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>property</th>
+                    <th>type</th>
+                    <th>บังคับ?</th>
+                    <th>ใช้กับ</th>
+                    <th>ตัวอย่าง</th>
+                </tr>
+                <tr><td><code>name</code></td><td>string</td><td class="yes">ใช่</td><td>ทุก type</td><td class="mono">"email"</td></tr>
+                <tr><td><code>label</code></td><td>string</td><td class="yes">ใช่</td><td>แสดงใน UI</td><td class="mono">"อีเมล"</td></tr>
+                <tr><td><code>type</code></td><td>string</td><td class="yes">ใช่</td><td>text · textarea · select · image · file</td><td class="mono">"select"</td></tr>
+                <tr><td><code>storage</code></td><td>string</td><td class="yes">ใช่</td><td>column · extra · file</td><td class="mono">"extra"</td></tr>
+                <tr><td><code>required</code></td><td>bool</td><td>ไม่</td><td>column/extra — validate POST/PUT</td><td class="mono">true</td></tr>
+                <tr><td><code>default</code></td><td>string</td><td>ไม่</td><td>ค่าเริ่มต้น + JSON sample</td><td class="mono">"user"</td></tr>
+                <tr><td><code>placeholder</code></td><td>string</td><td>ไม่</td><td>hint ใน filter / form</td><td class="mono">"user@example.com"</td></tr>
+                <tr><td><code>maxLength</code></td><td>number</td><td>ไม่</td><td>text, textarea (อ้างอิง)</td><td class="mono">200</td></tr>
+                <tr><td><code>maxSizeMb</code></td><td>number</td><td>ไม่</td><td>image, file</td><td class="mono">5</td></tr>
+                <tr><td><code>accept</code></td><td>string</td><td>ไม่</td><td>image (HTML accept)</td><td class="mono">"image/*"</td></tr>
+                <tr><td><code>options</code></td><td>string[]</td><td>select</td><td>รายการค่าที่เลือกได้</td><td class="mono">["admin","user"]</td></tr>
+                <tr><td><code>filterable</code></td><td>bool | null</td><td>ไม่</td><td>column/extra — เปิด/ปิด filter</td><td class="mono">false</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel" id="filter-types">
+        <h2>ตาราง Filter — วิธี match ตาม type</h2>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>type</th>
+                    <th>query ตัวอย่าง</th>
+                    <th>วิธี match</th>
+                    <th>เทียบ SQL / logic</th>
+                </tr>
+                <tr>
+                    <td><code>text</code>, <code>textarea</code></td>
+                    <td class="mono">?name=สมชาย</td>
+                    <td>contains (ไม่สนตัวพิมพ์)</td>
+                    <td><code>WHERE Name LIKE '%สมชาย%'</code></td>
+                </tr>
+                <tr>
+                    <td><code>select</code></td>
+                    <td class="mono">?role=admin</td>
+                    <td>exact</td>
+                    <td><code>WHERE Role = 'admin'</code></td>
+                </tr>
+                <tr>
+                    <td><code>extra</code> (text)</td>
+                    <td class="mono">?department=IT</td>
+                    <td>contains ใน ExtraJson</td>
+                    <td>filter หลัง query DB</td>
+                </tr>
+                <tr>
+                    <td><code>extra</code> (select)</td>
+                    <td class="mono">?status=active</td>
+                    <td>exact ใน ExtraJson</td>
+                    <td>filter หลัง query DB</td>
+                </tr>
+                <tr>
+                    <td><code>image</code>, <code>file</code></td>
+                    <td>—</td>
+                    <td class="no">ไม่รองรับ</td>
+                    <td>ใช้ <code>filterable: false</code></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel" id="example-json">
+        <h2>ตัวอย่าง JSON ครบทุก type (GET /api/members/1)</h2>
+        <pre>{
+  "id": 1,                          // int — system
+  "name": "สมชาย ใจดี",              // text · column
+  "email": "somchai@example.com",   // text · column
+  "phone": "0812345678",            // text · column
+  "role": "user",                   // select · column
+  "bio": "นักพัฒนาเว็บ",             // textarea · column
+  "department": "IT",               // text · extra
+  "status": "active",               // select · extra
+  "photo": "/uploads/images/member-1-abc.jpg",   // image · file
+  "file": "/uploads/files/member-1-def.pdf",     // file · file
+  "imagePath": "/uploads/images/member-1-abc.jpg", // system (ซ้ำ photo)
+  "filePath": "/uploads/files/member-1-def.pdf",
+  "fileName": "resume.pdf",
+  "createdAt": "2026-05-28T10:00:00Z",  // DateTime · system
+  "updatedAt": "2026-05-28T12:00:00Z"
+}</pre>
+        <h3>ตัวอย่าง POST (multipart form fields)</h3>
+        <pre>name=สมชาย ใจดี
+email=somchai@example.com
+phone=0812345678
+role=user
+bio=นักพัฒนา
+department=IT
+status=active
+photo=&lt;binary&gt;    ← type image, ไม่ใส่ใน JSON
+file=&lt;binary&gt;     ← type file</pre>
+        <h3>ตัวอย่าง PUT เพิ่มเติม</h3>
+        <pre>clearPhoto=true     ← ลบรูป (bool ใน form)
+clearFile=false
+cv=&lt;binary&gt;       ← ถ้าเพิ่มฟิลด์ file ชื่อ cv ใน fields.json</pre>
+    </div>
+
+    <!-- ===== คู่มือ ===== -->
+    <div class="section">คู่มือ — วิธีเพิ่ม API ทุกแบบ</div>
+
+    <nav class="toc">
+        <a href="#flow">ความเชื่อมโยง</a>
+        <a href="#types">Data types</a>
+        <a href="#way1">① Extra field</a>
+        <a href="#way2">② Filter</a>
+        <a href="#way3">③ ไฟล์แนบ</a>
+        <a href="#way4">④ Column + DB</a>
+        <a href="#way5">⑤ Entity ใหม่</a>
+        <a href="#way6">⑥ Endpoint JSON</a>
+        <a href="#checklist">Checklist</a>
+    </nav>
+
+    <div class="panel" id="flow">
+        <h2>ภาพรวม — Request ไหลยังไง</h2>
+        <pre class="flow">Client (test.html / Postman)
+    │
+    ▼
+<span class="arrow">Program.cs</span>  →  routing, CORS, static files, DI
+    │
+    ▼
+<span class="arrow">Controller</span>   →  รับ HTTP, อ่าน query/form/files
+    │                MembersController  → CRUD /api/members
+    │                HomeController     → /manifest, /schema
+    ▼
+<span class="arrow">Service</span>      →  logic จริง (MemberService, SchemaService)
+    │                FieldFilterHelper   → filter จาก fields.json
+    │                FieldFileHelper     → ไฟล์จาก fields.json
+    │                MemberMapper        → form ↔ model ↔ JSON
+    ▼
+<span class="arrow">Data</span>         →  AppDbContext (EF Core) → SQLite
+    │                LocalFileStorage    → ../uploads/
+    ▼
+<span class="arrow">fields.json</span>  →  schema กลาง — filter, ฟิลด์, ไฟล์, manifest</pre>
+        <p><strong>กุญแจสำคัญ:</strong> <code>fields.json</code> เป็นศูนย์กลาง — แก้ที่เดียว แล้ว API + filter + ไฟล์ + test.html อัปเดตตาม (restart server)</p>
+    </div>
+
+    <table>
+        <tr><th>ไฟล์</th><th>หน้าที่</th><th>แก้เมื่อไหร่</th></tr>
+        <tr><td class="file-link">fields.json</td><td>นิยามฟิลด์, filter, ไฟล์</td><td>เพิ่มฟิลด์ / filter / upload</td></tr>
+        <tr><td class="file-link">Controllers/MembersController.cs</td><td>route CRUD, อ่าน request</td><td>เพิ่ม endpoint ใหม่ใน resource เดิม</td></tr>
+        <tr><td class="file-link">Services/MemberService.cs</td><td>business logic CRUD</td><td>logic พิเศษ (เช่น validation ซับซ้อน)</td></tr>
+        <tr><td class="file-link">Services/SchemaService.cs</td><td>อ่าน fields.json → manifest</td><td>เพิ่ม model ใน manifest / tester</td></tr>
+        <tr><td class="file-link">Services/MemberMapper.cs</td><td>แปลง form ↔ Member ↔ JSON</td><td>เปลี่ยนรูปแบบ response</td></tr>
+        <tr><td class="file-link">Models/Member.cs</td><td>entity ใน DB</td><td>เพิ่ม column ถาวร</td></tr>
+        <tr><td class="file-link">Data/AppDbContext.cs</td><td>EF Core + SQLite</td><td>เพิ่ม DbSet / กำหนด column</td></tr>
+        <tr><td class="file-link">Program.cs</td><td>ลงทะเบียน service, middleware</td><td>เพิ่ม entity/service ใหม่</td></tr>
+        <tr><td class="file-link">wwwroot/test.html</td><td>UI ทดสอบ (อ่าน manifest)</td><td>ปกติไม่ต้องแก้ — dynamic จาก schema</td></tr>
+    </table>
+
+    <details id="way1" open>
+        <summary><span class="tag easy">ง่าย</span> ① เพิ่มฟิลด์ Extra (ไม่แตะ C# / DB)</summary>
+        <div class="detail-body">
+            <p>เก็บใน <code>Member.ExtraJson</code> — เหมาะทดสอบฟิลด์ใหม่เร็วๆ</p>
+            <h3>ขั้นตอน</h3>
+            <ol>
+                <li>เพิ่มใน <code>fields.json</code> ด้วย <code>"storage": "extra"</code></li>
+                <li><code>dotnet run</code> ใหม่ (restart)</li>
+                <li>เปิด test.html → POST/PUT จะมีฟิลด์ใน JSON sample อัตโนมัติ</li>
+            </ol>
+            <pre>{
+  "name": "nickname",
+  "label": "ชื่อเล่น",
+  "type": "text",
+  "storage": "extra",
+  "placeholder": "เช่น ชาย"
+}</pre>
+            <p><strong>โค้ดที่ทำงาน:</strong> <code>MemberMapper.ApplyFields</code> เขียนลง ExtraJson · <code>ToApiObject</code> แผ่กลับเป็น JSON flat</p>
+        </div>
+    </details>
+
+    <details id="way2">
+        <summary><span class="tag easy">ง่าย</span> ② เพิ่ม Filter (query string)</summary>
+        <div class="detail-body">
+            <p>Filter สร้างจาก <code>fields.json</code> อัตโนมัติ — ไม่ hardcode ใน controller</p>
+            <h3>กฎ filterable</h3>
+            <table>
+                <tr><th>filterable</th><th>ผล</th></tr>
+                <tr><td>ไม่ใส่</td><td>filter ได้ถ้า storage = column หรือ extra</td></tr>
+                <tr><td>true</td><td>บังคับ filter ได้</td></tr>
+                <tr><td>false</td><td>ไม่แสดง filter (เช่น bio ยาวๆ)</td></tr>
+            </table>
+            <pre>GET /api/members?role=admin&amp;department=IT&amp;nickname=ชาย</pre>
+            <p><strong>โค้ดที่ทำงาน:</strong></p>
+            <ul>
+                <li><code>MembersController.GetAll</code> — อ่าน query ตามฟิลด์ filterable</li>
+                <li><code>FieldFilterHelper</code> — column → EF Core · extra → filter ใน memory</li>
+                <li><code>SchemaService.GetManifest</code> — ส่งรายการ filters ให้ test.html</li>
+            </ul>
+        </div>
+    </details>
+
+    <details id="way3">
+        <summary><span class="tag easy">ง่าย</span> ③ เพิ่มไฟล์แนบ (upload)</summary>
+        <div class="detail-body">
+            <p>เพิ่มฟิลด์ <code>storage: "file"</code> → ช่อง upload ใน test.html + API รับ multipart อัตโนมัติ</p>
+            <pre>{
+  "name": "cv",
+  "label": "เรซูเม่",
+  "type": "file",
+  "storage": "file",
+  "maxSizeMb": 5
+}</pre>
+            <table>
+                <tr><th>ฟิลด์</th><th>เก็บที่</th></tr>
+                <tr><td>photo (type: image)</td><td>Member.ImagePath</td></tr>
+                <tr><td>file</td><td>Member.FilePath + FileName</td></tr>
+                <tr><td>ฟิลด์ใหม่อื่นๆ</td><td>ExtraJson (cvPath, cvName)</td></tr>
+            </table>
+            <p>POST/PUT ใช้ <code>multipart/form-data</code> — ไฟล์ไม่ใส่ใน JSON body</p>
+            <p>PUT ลบไฟล์: ส่ง <code>clearCv=true</code> (ชื่อ = clear + ตัวแรกใหญ่ของ name)</p>
+            <p><strong>โค้ดที่ทำงาน:</strong> <code>FieldFileHelper</code> + <code>LocalFileStorage</code> + <code>MemberService.ApplyUploadedFilesAsync</code></p>
+        </div>
+    </details>
+
+    <details id="way4">
+        <summary><span class="tag mid">ปานกลาง</span> ④ เพิ่ม Column ถาวรใน DB</summary>
+        <div class="detail-body">
+            <p>ฟิลด์ที่ต้องการ column จริงใน SQLite — แก้ 3 ที่ + migrate DB</p>
+            <h3>ขั้นตอน</h3>
+            <ol>
+                <li><code>Models/Member.cs</code> — เพิ่ม property</li>
+                <li><code>Data/AppDbContext.cs</code> — กำหนด HasMaxLength ฯลฯ (ถ้าต้องการ)</li>
+                <li><code>fields.json</code> — <code>"storage": "column"</code></li>
+                <li>ลบ/สร้าง DB ใหม่ หรือ migrate (โปรเจกต์นี้ใช้ <code>EnsureCreated</code> — ลบ <code>data/members.db</code> แล้วรันใหม่ถ้า schema เปลี่ยน)</li>
+                <li>restart server</li>
+            </ol>
+            <pre>// Member.cs
+public string? LineId { get; set; }
+
+// fields.json
+{ "name": "lineId", "label": "Line ID", "type": "text", "storage": "column" }</pre>
+            <p><code>MemberMapper</code> ใช้ reflection อ่าน/เขียน column ตามชื่อใน fields.json</p>
+        </div>
+    </details>
+
+    <details id="way5">
+        <summary><span class="tag hard">ขั้นสูง</span> ⑤ เพิ่ม Resource / Entity ใหม่ทั้งชุด</summary>
+        <div class="detail-body">
+            <p>เช่น <code>/api/products</code> — ทำชุดใหม่คล้าย Members</p>
+            <h3>Checklist ไฟล์ที่ต้องสร้าง/แก้</h3>
+            <ol>
+                <li><code>Models/Product.cs</code> — entity</li>
+                <li><code>Data/AppDbContext.cs</code> — <code>DbSet&lt;Product&gt;</code></li>
+                <li><code>fields-product.json</code> หรือขยาย SchemaService ให้รองรับหลาย entity</li>
+                <li><code>Services/IProductService.cs</code> + <code>ProductService.cs</code></li>
+                <li><code>Controllers/ProductsController.cs</code> — <code>[Route("api/[controller]")]</code></li>
+                <li><code>Program.cs</code> — <code>AddScoped&lt;IProductService, ProductService&gt;()</code></li>
+                <li><code>SchemaService.GetManifest()</code> — เพิ่ม model ใน <code>models[]</code> เพื่อให้ test.html เลือกได้</li>
+            </ol>
+            <pre>// ProductsController.cs (โครงสร้าง)
+[ApiController]
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
+{
+    [HttpGet]           public Task&lt;IActionResult&gt; GetAll() …
+    [HttpGet("{id}")]   public Task&lt;IActionResult&gt; GetById(int id) …
+    [HttpPost]          public Task&lt;IActionResult&gt; Create() …
+    [HttpPut("{id}")]   public Task&lt;IActionResult&gt; Update(int id) …
+    [HttpDelete("{id}")] public Task&lt;IActionResult&gt; Delete(int id) …
+}</pre>
+            <p>แนะนำ copy pattern จาก Members แล้วเปลี่ยนชื่อ — logic filter/ไฟล์ใช้ helper เดิมได้ถ้า schema เหมือนกัน</p>
+        </div>
+    </details>
+
+    <details id="way6">
+        <summary><span class="tag easy">ง่าย</span> ⑥ เพิ่ม Endpoint JSON ธรรมดา (ไม่ CRUD)</summary>
+        <div class="detail-body">
+            <p>เช่น <code>/health</code>, <code>/stats</code> — ไม่ต้องมี fields.json</p>
+            <h3>วิธีที่ 1 — เพิ่มใน HomeController</h3>
+            <pre>[HttpGet("/health")]
+public IActionResult Health() =&gt; Ok(new { status = "ok", time = DateTime.UtcNow });</pre>
+            <h3>วิธีที่ 2 — Controller ใหม่</h3>
+            <pre>[ApiController]
+[Route("api/[controller]")]
+public class StatsController : ControllerBase
+{
+    [HttpGet] public IActionResult Get() =&gt; Ok(new { members = 42 });
+}</pre>
+            <p>ถ้าต้องการให้ test.html เลือกได้ → เพิ่ม operation ใน <code>SchemaService.GetManifest() → models</code></p>
+            <p><strong>DI:</strong> ถ้า endpoint ต้องใช้ DB ให้ inject service ผ่าน constructor เหมือน <code>MembersController</code></p>
+        </div>
+    </details>
+
+    <details id="checklist">
+        <summary>Checklist — ทำไม API ใช้ไม่ได้?</summary>
+        <div class="detail-body">
+            <table>
+                <tr><th>อาการ</th><th>สาเหตุที่พบบ่อย</th></tr>
+                <tr><td>404 Not Found</td><td>route ผิด · ลืม <code>MapControllers()</code> · ไม่มี [HttpGet] path</td></tr>
+                <tr><td>500 Error</td><td>แก้ C# แล้วไม่ restart · DB schema ไม่ตรง (ลบ members.db)</td></tr>
+                <tr><td>ฟิลด์ใหม่ไม่ขึ้น</td><td>ลืม restart · แก้ fields.json ผิด storage</td></tr>
+                <tr><td>Filter ไม่ทำงาน</td><td>filterable: false · storage เป็น file</td></tr>
+                <tr><td>Upload ล้มเหลว</td><td>ไม่ใช้ multipart · ไฟล์ใหญ่เกิน maxSizeMb · นามสกุลไม่รองรับ</td></tr>
+                <tr><td>test.html ว่าง</td><td>server ไม่รัน · เปิดไฟล์ตรงๆ แทน localhost · manifest ไม่มี models</td></tr>
+            </table>
+            <p><strong>หลังแก้ C#:</strong> <code>Ctrl+C</code> → <code>dotnet run</code> · หลังแก้ HTML/fields.json บางอย่าง: refresh browser พอ</p>
+        </div>
+    </details>
+
+    <div class="section">โครงสร้างโฟลเดอร์</div>
+    <pre>DotnetMVC/
+├── Controllers/     MembersController, HomeController
+├── Models/          Member, FieldSchema
+├── Services/        MemberService, SchemaService, MemberMapper
+│                    FieldFilterHelper, FieldFileHelper, LocalFileStorage
+├── Data/            AppDbContext
+├── fields.json      ← schema กลาง
+├── wwwroot/         index.html (Hub), test.html (Tester)
+└── Program.cs       DI + middleware
+
+../data/members.db   SQLite
+../uploads/          รูป + ไฟล์แนบ</pre>
+
+    <p class="status" id="status">กำลังตรวจสอบ API...</p>
+</div>
+<script>
+fetch('/api/members')
+    .then(r => {
+        const el = document.getElementById('status');
+        el.textContent = r.ok ? '● API พร้อมใช้งาน — เปิด /test.html เพื่อทดสอบ' : '● API ตอบไม่ปกติ';
+        el.className = 'status ' + (r.ok ? 'ok' : 'err');
+    })
+    .catch(() => {
+        const el = document.getElementById('status');
+        el.textContent = '● รัน dotnet run ก่อน (cd LearningCode\\DotnetMVC)';
+        el.className = 'status err';
+    });
+</script>
+</body>
+</html>

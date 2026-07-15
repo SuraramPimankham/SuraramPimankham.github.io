@@ -767,7 +767,22 @@ body.light-mode .timeline .timeline-item:focus-visible {
 .portfolios .portfolio-item .hover-items h3 {
   font-size: 1.5rem;
   color: var(--color-white);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  padding: 0 1rem;
+}
+.portfolios .portfolio-item .hover-items .portfolio-desc {
+  color: var(--color-grey-2);
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 90%;
+  margin: 0 0 1.25rem;
+  padding: 0 0.5rem;
+}
+.portfolios .portfolio-item .hover-items .icons a.icon {
+  text-decoration: none;
+  color: inherit;
 }
 .portfolios .portfolio-item .hover-items .icons {
   display: flex;

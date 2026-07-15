@@ -1,0 +1,74 @@
+{
+  "entity": "Member",
+  "fields": [
+    {
+      "name": "name",
+      "label": "ชื่อ",
+      "type": "text",
+      "storage": "column",
+      "required": true,
+      "maxLength": 100
+    },
+    {
+      "name": "email",
+      "label": "อีเมล",
+      "type": "text",
+      "storage": "column",
+      "maxLength": 200,
+      "placeholder": "user@example.com"
+    },
+    {
+      "name": "phone",
+      "label": "เบอร์โทร",
+      "type": "text",
+      "storage": "column",
+      "maxLength": 20
+    },
+    {
+      "name": "role",
+      "label": "บทบาท",
+      "type": "select",
+      "storage": "column",
+      "default": "user",
+      "options": ["admin", "user", "guest"]
+    },
+    {
+      "name": "bio",
+      "label": "ประวัติ",
+      "type": "textarea",
+      "storage": "column",
+      "maxLength": 2000
+    },
+    {
+      "name": "photo",
+      "label": "รูปโปรไฟล์",
+      "type": "image",
+      "storage": "file",
+      "accept": "image/*",
+      "maxSizeMb": 2
+    },
+    {
+      "name": "file",
+      "label": "ไฟล์แนบ",
+      "type": "file",
+      "storage": "file",
+      "maxSizeMb": 10
+    },
+    {
+      "name": "department",
+      "label": "แผนก",
+      "type": "text",
+      "storage": "extra",
+      "placeholder": "เช่น IT, HR"
+    },
+    {
+      "name": "status",
+      "label": "สถานะ",
+      "type": "select",
+      "storage": "extra",
+      "default": "active",
+      "options": ["active", "inactive"]
+    }
+  ],
+  "systemFields": ["id", "imagePath", "filePath", "fileName", "createdAt", "updatedAt"]
+}
