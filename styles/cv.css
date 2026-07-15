@@ -352,11 +352,14 @@ a:hover {
   display: inline-block;
   color: var(--cv-accent);
   font-weight: 700;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
   padding: 0.2rem 0.55rem;
   border-radius: 6px;
   background: var(--cv-accent-soft);
   border: 1px solid rgba(46, 204, 113, 0.35);
+  max-width: 100%;
+  white-space: normal;
 }
 
 .cv-item__place {

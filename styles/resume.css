@@ -325,8 +325,9 @@ body.rs-page {
 
 .rs-job__time {
   color: var(--rs-accent);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
+  line-height: 1.4;
 }
 
 .rs-job__badge {

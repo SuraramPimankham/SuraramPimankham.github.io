@@ -141,7 +141,7 @@
       skillsTitle: textOf("[data-cv='skills'] .cv-section__title", root),
       skills,
       eduTitle: textOf("[data-cv='education'] .cv-section__title", root),
-      eduTime: eduItem ? textOf(".cv-item__time", eduItem) : "2020 - 2024",
+      eduTime: eduItem ? textOf(".cv-item__time", eduItem) : "2563 - 2567 (พ.ศ.)",
       eduPlace: [eduTitle, eduSub].filter(Boolean).join(" — "),
       eduText: eduItem ? textOf(".cv-item__text", eduItem) : "",
       prefsTitle: textOf("[data-cv='prefs'] .cv-section__title", root),
