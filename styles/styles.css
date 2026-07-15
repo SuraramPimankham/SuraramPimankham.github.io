@@ -1411,11 +1411,13 @@ body.light-mode .timeline .timeline-item .tl-list li::before {
   color: var(--color-neon);
 }
 
+.project-flutter { --card-accent: #54c5f8; }
 .project-react { --card-accent: #61dafb; }
 .project-angular { --card-accent: #dd0031; }
 .project-vue { --card-accent: #42b883; }
 .project-laravel { --card-accent: #ff2d20; }
 
+.project-flutter .project-card__badge,
 .project-react .project-card__badge,
 .project-angular .project-card__badge,
 .project-vue .project-card__badge,
@@ -1423,6 +1425,7 @@ body.light-mode .timeline .timeline-item .tl-list li::before {
   color: #fff;
 }
 
+.project-flutter .project-card__badge,
 .project-react .project-card__badge { color: #0d1218; }
 
 body.light-mode .project-card {
