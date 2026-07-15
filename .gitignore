@@ -8,3 +8,5 @@ LearningCode/uploads/images/*
 LearningCode/uploads/files/*
 !LearningCode/uploads/images/.gitkeep
 !LearningCode/uploads/files/.gitkeep
+จดหมายสมัครงาน/Full-Stack.txt
+*.txt
