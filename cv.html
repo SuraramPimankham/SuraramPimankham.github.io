@@ -17,36 +17,43 @@
 
 <body>
     <div class="cv-toolbar no-print">
-        <button type="button" class="cv-btn" onclick="window.print()">
-            <i class="fas fa-print"></i>
-            <span>Print / Save as PDF</span>
-        </button>
-        <button type="button" class="cv-btn" id="cv-lang">
-            <i class="fas fa-language"></i>
-            <span id="cv-lang-text">EN</span>
-        </button>
+        <div class="cv-actions">
+            <button type="button" class="cv-actions__btn" id="cv-download" aria-label="Download PDF">
+                <i class="fas fa-download"></i>
+                <span>PDF</span>
+            </button>
+            <button type="button" class="cv-actions__btn" id="cv-lang" aria-label="Switch language">
+                <img class="cv-lang__flag" id="cv-lang-flag" src="https://flagcdn.com/w40/th.png" width="20" height="14" alt="">
+                <span id="cv-lang-text">TH</span>
+            </button>
+        </div>
     </div>
 
     <main class="cv">
         <header class="cv-header">
             <div class="cv-header__left">
-                <h1 class="cv-name">สุรราม พิมานคำ</h1>
+                <h1 class="cv-name" data-i18n="cv.name">สุรราม พิมานคำ</h1>
                 <div class="cv-role" data-i18n="about.job.role.value">Programmer</div>
                 <div class="cv-sub" data-i18n="extras.job.subfield.value">Programmer/Developer</div>
+                <div class="cv-links">
+                    <a href="mailto:Surarampi@kkumail.com">Surarampi@kkumail.com</a>
+                    <a href="mailto:goodto.GG@gmail.com">goodto.GG@gmail.com</a>
+                    <a href="https://github.com/SuraramPimankham" target="_blank" rel="noopener">GitHub</a>
+                </div>
             </div>
             <div class="cv-header__right">
                 <div class="cv-contact">
                     <div class="cv-contact__row">
                         <span class="cv-contact__label">Tel</span>
-                        <span class="cv-contact__value">061-125-2572</span>
-                    </div>
-                    <div class="cv-contact__row">
-                        <span class="cv-contact__label">Email</span>
-                        <span class="cv-contact__value">goodto.GG@gmail.com</span>
+                        <span class="cv-contact__value"><a href="tel:0611252572">061-125-2572</a></span>
                     </div>
                     <div class="cv-contact__row">
                         <span class="cv-contact__label" data-i18n="contact.location">ที่อยู่</span>
-                        <span class="cv-contact__value" data-i18n="contact.location.value">: 888 หมู่ 8 ซอยรัตนาธิเบศร์ 24 บางกระสอ เมืองนนทบุรี นนทบุรี 11000</span>
+                        <span class="cv-contact__value" data-i18n="contact.location.value">888 หมู่ 8 ซอยรัตนาธิเบศร์ 24 บางกระสอ เมืองนนทบุรี นนทบุรี 11000</span>
+                    </div>
+                    <div class="cv-contact__row">
+                        <span class="cv-contact__label" data-i18n="contact.languages">ภาษา</span>
+                        <span class="cv-contact__value" data-i18n="contact.languages.value">ไทย (ดีมาก), อังกฤษ (พอใช้)</span>
                     </div>
                 </div>
             </div>
@@ -57,25 +64,25 @@
             <div class="cv-grid">
                 <div class="cv-kv">
                     <div class="cv-kv__k" data-i18n="extras.job.location.label">พื้นที่ที่ต้องการทำงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.location.value">ขอนแก่น (ทุกเขต)</div>
+                    <div class="cv-kv__v" data-i18n="extras.job.location.value">ได้ทุกพื้นที่ · ขอนแก่น (พิเศษ)</div>
                 </div>
                 <div class="cv-kv">
                     <div class="cv-kv__k" data-i18n="extras.job.salary.label">เงินเดือน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.salary.value">25,000 - 30,000 บาท</div>
+                    <div class="cv-kv__v" data-i18n="extras.job.salary.value">20,000 - 30,000 บาท</div>
                 </div>
                 <div class="cv-kv">
                     <div class="cv-kv__k" data-i18n="extras.job.type.label">รูปแบบงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.type.value">งานประจำ</div>
+                    <div class="cv-kv__v" data-i18n="extras.job.type.value">ได้ทุกรูปแบบ · Work from Home (พิเศษ)</div>
                 </div>
                 <div class="cv-kv">
                     <div class="cv-kv__k" data-i18n="extras.job.start.label">ระยะเวลาเริ่มงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.start.value">มากกว่า 30 วัน</div>
+                    <div class="cv-kv__v" data-i18n="extras.job.start.value">หลัง 01/08/2026 · หลังจากได้งาน 1 สัปดาห์</div>
                 </div>
             </div>
         </section>
 
         <section class="cv-section">
-            <h2 class="cv-section__title" data-i18n-html="work.title">ประวัติ <span>การทำงาน</span></h2>
+            <h2 class="cv-section__title" data-i18n="work.title.plain">ประวัติการทำงาน</h2>
             <div class="cv-timeline">
                 <div class="cv-item">
                     <div class="cv-item__meta">
@@ -83,9 +90,10 @@
                         <div class="cv-item__place" data-i18n-html="work.omc.title">OMC MLM Software <span>Programmer PHP</span></div>
                     </div>
                     <ul class="cv-item__list">
-                        <li data-i18n="work.omc.p1">ตรวจสอบ/วิเคราะห์ และแก้ไข bug จากลูกค้าร้องเรียน เพื่อให้ระบบทำงานได้ราบรื่น</li>
-                        <li data-i18n="work.omc.p2">ร่วมออกแบบและพัฒนาระบบใหม่ รวมถึงทดสอบ/ประเมินผลก่อนใช้งานจริง</li>
-                        <li data-i18n="work.omc.p3">สื่อสารอัปเดตสถานะกับลูกค้า และประสานงานร่วมกับทีมพัฒนา</li>
+                        <li data-i18n="work.omc.p1">พัฒนาและดูแลระบบ Web MLM ครบวงจรของบริษัทด้วย PHP เป็นหลัก</li>
+                        <li data-i18n="work.omc.p2">วิเคราะห์ แก้ไขบั๊ก และแก้ปัญหาจากลูกค้าร้องเรียน เพื่อให้ระบบทำงานได้ต่อเนื่อง</li>
+                        <li data-i18n="work.omc.p3">ให้คำปรึกษาการใช้งานระบบ MLM และประสานงานกับลูกค้าและทีมพัฒนา</li>
+                        <li data-i18n="work.omc.p4">ร่วมพัฒนาบางโมดูลด้วย Laravel ในช่วงที่บริษัทเริ่มเปลี่ยนผ่านจาก PHP เดิม</li>
                     </ul>
                 </div>
 
@@ -119,16 +127,14 @@
             <div class="cv-tags" role="list">
                 <span class="cv-tag" role="listitem">PHP</span>
                 <span class="cv-tag" role="listitem">Laravel</span>
+                <span class="cv-tag" role="listitem">ASP.NET</span>
+                <span class="cv-tag" role="listitem">Angular</span>
+                <span class="cv-tag" role="listitem">React</span>
+                <span class="cv-tag" role="listitem">Vue</span>
+                <span class="cv-tag" role="listitem">Flutter</span>
                 <span class="cv-tag" role="listitem">MySQL</span>
                 <span class="cv-tag" role="listitem">PostgreSQL</span>
-                <span class="cv-tag" role="listitem">Web API</span>
-                <span class="cv-tag" role="listitem">Angular</span>
-                <span class="cv-tag" role="listitem">ASP.NET</span>
                 <span class="cv-tag" role="listitem">Git</span>
-            </div>
-            <div class="cv-mini">
-                <div class="cv-mini__label" data-i18n="contact.languages">ภาษา</div>
-                <div class="cv-mini__value" data-i18n="contact.languages.value">: ไทย (ดีมาก), อังกฤษ (พอใช้)</div>
             </div>
         </section>
 
@@ -163,19 +169,31 @@
         </section>
     </main>
 
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="fonts-sarabun.js"></script>
     <script src="app.js"></script>
+    <script src="cv-pdf.js"></script>
     <script>
         (function () {
             const btn = document.getElementById("cv-lang");
             const txt = document.getElementById("cv-lang-text");
+            const flag = document.getElementById("cv-lang-flag");
+
             function getLang() {
                 return localStorage.getItem("lang") || "th";
             }
-            function update() {
+
+            function updateChrome() {
                 const lang = getLang();
                 document.documentElement.lang = lang;
-                if (txt) txt.textContent = lang === "th" ? "EN" : "TH";
+                if (txt) txt.textContent = lang === "th" ? "TH" : "EN";
+                if (flag) {
+                    flag.src = lang === "th"
+                        ? "https://flagcdn.com/w40/th.png"
+                        : "https://flagcdn.com/w40/gb.png";
+                }
             }
+
             if (btn) {
                 btn.addEventListener("click", () => {
                     const current = getLang();
@@ -183,10 +201,9 @@
                     location.reload();
                 });
             }
-            update();
+            updateChrome();
         })();
     </script>
 </body>
 
 </html>
-

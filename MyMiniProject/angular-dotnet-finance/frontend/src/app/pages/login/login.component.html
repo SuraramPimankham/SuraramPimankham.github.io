@@ -1,0 +1,37 @@
+@if (auth.loading()) {
+  <div class="boot">กำลังโหลด...</div>
+} @else if (!auth.user()) {
+  <div class="login-page">
+    <div class="login-visual" aria-hidden="true">
+      <div class="login-orb"></div>
+      <p class="login-tagline">บันทึกรายรับรายจ่าย พร้อมหลักฐานชัดเจน</p>
+    </div>
+    <form class="login-card" (ngSubmit)="onSubmit()">
+      <h1>Ledger</h1>
+      <p class="muted">เข้าสู่ระบบเพื่อจัดการการเงิน</p>
+      @if (error) {
+        <div class="alert">{{ error }}</div>
+      }
+      <label>
+        ชื่อผู้ใช้
+        <input [(ngModel)]="username" name="username" autocomplete="username" required />
+      </label>
+      <label>
+        รหัสผ่าน
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password"
+          required
+        />
+      </label>
+      <button class="btn primary" [disabled]="busy" type="submit">
+        {{ busy ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ' }}
+      </button>
+      <p class="hint">
+        ทดลอง: <code>admin / admin123</code> หรือ <code>user / user123</code>
+      </p>
+    </form>
+  </div>
+}

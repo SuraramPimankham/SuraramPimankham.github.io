@@ -1,0 +1,10 @@
+@echo off
+cd /d "%~dp0"
+if not exist data mkdir data
+if not exist uploads\slips mkdir uploads\slips
+start "Finance API Vue" cmd /k "cd /d "%~dp0backend" && dotnet run"
+timeout /t 3 /nobreak >nul
+start "Finance UI Vue" cmd /k "cd /d "%~dp0frontend" && npm run dev"
+echo Backend: http://localhost:5220
+echo Frontend: http://localhost:5221
+echo Login: admin / admin123

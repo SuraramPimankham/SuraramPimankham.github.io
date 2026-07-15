@@ -1,0 +1,104 @@
+<div class="page">
+  <header class="page-head">
+    <div>
+      <h1>ผู้ใช้</h1>
+      <p class="muted">จัดการบัญชีผู้ใช้ระบบ (เฉพาะ admin)</p>
+    </div>
+    <button type="button" class="btn primary" (click)="openCreate()">+ เพิ่มผู้ใช้</button>
+  </header>
+
+  @if (error && !showForm) {
+    <div class="alert">{{ error }}</div>
+  }
+
+  <div class="table-wrap panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>ชื่อ</th>
+          <th>อีเมล</th>
+          <th>บทบาท</th>
+          <th>สถานะ</th>
+          <th>สร้างเมื่อ</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (u of users; track u.id) {
+          <tr>
+            <td><code>{{ u.username }}</code></td>
+            <td>{{ u.fullName }}</td>
+            <td>{{ u.email || '—' }}</td>
+            <td>{{ u.role === 'admin' ? 'ผู้ดูแล' : 'ผู้ใช้' }}</td>
+            <td>
+              <span [class]="u.isActive ? 'tag-in' : 'tag-out'">
+                {{ u.isActive ? 'ใช้งาน' : 'ปิด' }}
+              </span>
+            </td>
+            <td>{{ formatDate(u.createdAt) }}</td>
+            <td class="actions">
+              <button type="button" class="btn ghost sm" (click)="openEdit(u)">แก้ไข</button>
+              <button type="button" class="btn danger sm" (click)="onDelete(u.id)">ลบ</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (showForm) {
+    <div class="modal-backdrop" (click)="closeForm()">
+      <form class="modal" (click)="$event.stopPropagation()" (ngSubmit)="onSubmit()">
+        <h2>{{ editing ? 'แก้ไขผู้ใช้' : 'เพิ่มผู้ใช้' }}</h2>
+        @if (error) {
+          <div class="alert">{{ error }}</div>
+        }
+        <div class="form-grid">
+          @if (!editing) {
+            <label>
+              Username
+              <input required [(ngModel)]="form.username" name="username" />
+            </label>
+          }
+          <label>
+            รหัสผ่าน{{ editing ? ' (ว่าง = ไม่เปลี่ยน)' : '' }}
+            <input
+              type="password"
+              [required]="!editing"
+              [(ngModel)]="form.password"
+              name="password"
+            />
+          </label>
+          <label>
+            ชื่อเต็ม
+            <input required [(ngModel)]="form.fullName" name="fullName" />
+          </label>
+          <label>
+            อีเมล
+            <input type="email" [(ngModel)]="form.email" name="email" />
+          </label>
+          <label>
+            บทบาท
+            <select [(ngModel)]="form.role" name="role">
+              <option value="user">ผู้ใช้</option>
+              <option value="admin">ผู้ดูแล</option>
+            </select>
+          </label>
+          @if (editing) {
+            <label class="check">
+              <input type="checkbox" [(ngModel)]="form.isActive" name="isActive" />
+              เปิดใช้งาน
+            </label>
+          }
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn ghost" (click)="closeForm()">ยกเลิก</button>
+          <button type="submit" class="btn primary" [disabled]="busy">
+            {{ busy ? 'กำลังบันทึก...' : 'บันทึก' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

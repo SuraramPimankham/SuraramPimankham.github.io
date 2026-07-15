@@ -1,0 +1,11 @@
+bin/
+obj/
+data/*.db
+data/*.db-*
+uploads/
+backend/bin/
+backend/obj/
+frontend/node_modules/
+frontend/dist/
+*.user
+.vs/
