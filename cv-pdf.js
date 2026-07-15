@@ -1,7 +1,7 @@
-/* Vector CV PDF (jsPDF + embedded Sarabun) */
+/* Vector CV PDF — neon dark theme, matches updated cv.html */
 (function () {
   const downloadBtn = document.getElementById("cv-download");
-  if (!downloadBtn) return;
+  if (!downloadBtn || document.body.dataset.doc !== "cv") return;
 
   function getLang() {
     return localStorage.getItem("lang") || "th";
@@ -77,22 +77,9 @@
 
   function collectCvData() {
     const root = document.querySelector(".cv");
-    const sections = [...root.querySelectorAll(".cv-section")];
+    const section = (key) => root.querySelector(`[data-cv="${key}"]`);
 
-    const sectionTitle = (i) => {
-      const el = sections[i] && sections[i].querySelector(".cv-section__title");
-      return el ? el.textContent.replace(/\s+/g, " ").trim() : "";
-    };
-
-    const kvFrom = (section) =>
-      section
-        ? [...section.querySelectorAll(".cv-kv")].map((kv) => ({
-            k: textOf(".cv-kv__k", kv),
-            v: textOf(".cv-kv__v", kv)
-          }))
-        : [];
-
-    const jobs = [...root.querySelectorAll(".cv-timeline .cv-item")].map((item) => {
+    const jobs = [...root.querySelectorAll("[data-cv='experience'] .cv-item")].map((item) => {
       const placeEl = item.querySelector(".cv-item__place");
       const title = placeEl
         ? [...placeEl.childNodes]
@@ -104,12 +91,23 @@
       const sub = placeEl ? textOf("span", placeEl) : "";
       return {
         time: textOf(".cv-item__time", item),
-        place: [title, sub].filter(Boolean).join(" - "),
+        place: [title, sub].filter(Boolean).join(" — "),
         bullets: textsOf(".cv-item__list li", item)
       };
     });
 
-    const eduItem = sections[2] ? sections[2].querySelector(".cv-item") : null;
+    const projects = [...root.querySelectorAll("[data-cv='projects'] .cv-project")].map((p) => ({
+      title: textOf("h3", p),
+      tech: textOf(".cv-project__tech", p),
+      desc: textOf("p", p)
+    }));
+
+    const skills = [...root.querySelectorAll("[data-cv='skills'] .cv-skill-col")].map((col) => ({
+      title: textOf("h4", col),
+      items: textOf("p", col)
+    }));
+
+    const eduItem = root.querySelector("[data-cv='education'] .cv-item");
     const eduPlaceEl = eduItem && eduItem.querySelector(".cv-item__place");
     const eduTitle = eduPlaceEl
       ? [...eduPlaceEl.childNodes]
@@ -120,40 +118,43 @@
       : "";
     const eduSub = eduPlaceEl ? textOf("span", eduPlaceEl) : "";
 
+    const prefsSec = section("prefs");
+    const prefs = prefsSec
+      ? [...prefsSec.querySelectorAll(".cv-kv")].map((kv) => ({
+          k: textOf(".cv-kv__k", kv),
+          v: textOf(".cv-kv__v", kv)
+        }))
+      : [];
+
+    const linkTexts = textsOf(".cv-links a", root);
+
     return {
       name: textOf(".cv-name", root),
       role: textOf(".cv-role", root),
-      sub: textOf(".cv-sub", root),
-      emails: textsOf(".cv-links a", root).filter((t) => t.includes("@")),
-      github: "github.com/SuraramPimankham",
-      tel: "061-125-2572",
-      location: textOf(".cv-contact__row:nth-child(2) .cv-contact__value", root),
-      languages: textOf(".cv-contact__row:nth-child(3) .cv-contact__value", root),
-      prefsTitle: sectionTitle(0),
-      prefs: kvFrom(sections[0]),
-      workTitle: sectionTitle(1),
+      contact: linkTexts.join("  ·  "),
+      summaryTitle: textOf("[data-cv='summary'] .cv-section__title", root),
+      summary: textOf(".cv-summary", root),
+      workTitle: textOf("[data-cv='experience'] .cv-section__title", root),
       jobs,
-      eduTitle: sectionTitle(2),
+      projectsTitle: textOf("[data-cv='projects'] .cv-section__title", root),
+      projects,
+      skillsTitle: textOf("[data-cv='skills'] .cv-section__title", root),
+      skills,
+      eduTitle: textOf("[data-cv='education'] .cv-section__title", root),
       eduTime: eduItem ? textOf(".cv-item__time", eduItem) : "2020 - 2024",
-      eduPlace: [eduTitle, eduSub].filter(Boolean).join(" - "),
+      eduPlace: [eduTitle, eduSub].filter(Boolean).join(" — "),
       eduText: eduItem ? textOf(".cv-item__text", eduItem) : "",
-      skillsTitle: sectionTitle(3),
-      skills: textsOf(".cv-tag", root),
-      applicantTitle: sectionTitle(4),
-      applicant: kvFrom(sections[4])
+      prefsTitle: textOf("[data-cv='prefs'] .cv-section__title", root),
+      prefs
     };
   }
 
   async function createVectorPdf() {
     const JsPDFCtor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
-    if (!JsPDFCtor) {
-      throw new Error("jsPDF library not loaded");
-    }
+    if (!JsPDFCtor) throw new Error("jsPDF library not loaded");
 
     const [regular, bold] = await loadFontsBase64();
-    if (!regular || !bold) {
-      throw new Error("Sarabun fonts not loaded");
-    }
+    if (!regular || !bold) throw new Error("Sarabun fonts not loaded");
 
     const doc = new JsPDFCtor({ unit: "mm", format: "a4", orientation: "portrait" });
     doc.addFileToVFS("Sarabun-Regular.ttf", regular);
@@ -164,17 +165,28 @@
 
     const data = collectCvData();
     const pageW = 210;
-    const margin = 14;
+    const pageH = 297;
+    const margin = 12;
     const contentW = pageW - margin * 2;
-    const accent = [12, 122, 69];
-    const muted = [90, 112, 100];
-    const text = [20, 36, 28];
-    let y = 16;
+    const bg = [13, 18, 24];
+    const panel = [21, 27, 36];
+    const accent = [57, 255, 138];
+    const accent2 = [46, 204, 113];
+    const muted = [139, 154, 171];
+    const text = [232, 238, 242];
+    let y = 12;
+
+    const paintPage = () => {
+      doc.setFillColor(...bg);
+      doc.rect(0, 0, pageW, pageH, "F");
+    };
+    paintPage();
 
     const ensureSpace = (need) => {
-      if (y + need > 287) {
+      if (y + need > 285) {
         doc.addPage();
-        y = 16;
+        paintPage();
+        y = 12;
       }
     };
 
@@ -187,164 +199,186 @@
       doc.setFontSize(size);
     };
 
-    // Header
-    setBold(20);
-    doc.setTextColor(...text);
-    doc.text(data.name, margin, y);
-    y += 7;
-
-    setBold(11);
-    doc.setTextColor(...accent);
-    doc.text(data.role, margin, y);
-    y += 5;
-
-    setNormal(9);
-    doc.setTextColor(...muted);
-    doc.text(data.sub, margin, y);
-    y += 6;
-
-    setNormal(8.5);
-    doc.setTextColor(...text);
-    const contactLine = [
-      data.tel,
-      ...data.emails,
-      data.github
-    ].join("  |  ");
-    wrapText(doc, contactLine, contentW).forEach((line) => {
-      doc.text(line, margin, y);
-      y += 4;
-    });
-    if (data.location) {
-      wrapText(doc, data.location, contentW).forEach((line) => {
-        doc.text(line, margin, y);
-        y += 4;
-      });
-    }
-    if (data.languages) {
-      doc.text(data.languages, margin, y);
-      y += 5;
-    }
-
-    doc.setDrawColor(...accent);
-    doc.setLineWidth(0.6);
-    doc.line(margin, y, pageW - margin, y);
-    y += 8;
-
     const sectionTitle = (title) => {
-      ensureSpace(12);
-      setBold(10);
+      ensureSpace(10);
+      setBold(9);
       doc.setTextColor(...accent);
       doc.text(String(title || "").toUpperCase(), margin + 3, y);
       doc.setFillColor(...accent);
-      doc.rect(margin, y - 3.2, 1.2, 4, "F");
-      y += 6;
-    };
-
-    const drawKvGrid = (items) => {
-      const colW = (contentW - 4) / 2;
-      items.forEach((item, i) => {
-        const col = i % 2;
-        if (col === 0) ensureSpace(16);
-        const x = margin + col * (colW + 4);
-        const boxY = y;
-        doc.setDrawColor(200, 220, 208);
-        doc.setFillColor(255, 255, 255);
-        doc.roundedRect(x, boxY, colW, 12, 2, 2, "S");
-        setBold(7.5);
-        doc.setTextColor(...muted);
-        doc.text(item.k, x + 2.5, boxY + 4);
-        setNormal(8.5);
-        doc.setTextColor(...text);
-        const lines = wrapText(doc, item.v, colW - 5);
-        lines.slice(0, 2).forEach((line, li) => {
-          doc.text(line, x + 2.5, boxY + 8 + li * 3.5);
-        });
-        if (col === 1 || i === items.length - 1) y += 14;
-      });
-      y += 2;
-    };
-
-    sectionTitle(data.prefsTitle || "Job preference");
-    drawKvGrid(data.prefs);
-
-    sectionTitle(data.workTitle || "Work Experience");
-    data.jobs.forEach((job) => {
-      ensureSpace(28);
-      setBold(8);
-      doc.setTextColor(...accent);
-      doc.setFillColor(232, 245, 236);
-      const badge = job.time;
-      const badgeW = doc.getTextWidth(badge) + 4;
-      doc.roundedRect(margin, y - 3.5, badgeW, 5, 1.5, 1.5, "F");
-      doc.text(badge, margin + 2, y);
+      doc.rect(margin, y - 3, 1.2, 3.8, "F");
       y += 5;
+    };
 
-      setBold(10);
-      doc.setTextColor(...text);
-      const placeLines = wrapText(doc, job.place, contentW);
-      placeLines.forEach((line) => {
+    // Compact header
+    setBold(16);
+    doc.setTextColor(255, 255, 255);
+    doc.text(data.name, margin, y);
+    y += 5.5;
+    setBold(10);
+    doc.setTextColor(...accent);
+    doc.text(data.role, margin, y);
+    y += 4.5;
+    setNormal(7.5);
+    doc.setTextColor(...muted);
+    wrapText(doc, data.contact, contentW).forEach((line) => {
+      doc.text(line, margin, y);
+      y += 3.5;
+    });
+    doc.setDrawColor(...accent2);
+    doc.setLineWidth(0.4);
+    doc.line(margin, y + 0.5, pageW - margin, y + 0.5);
+    y += 6;
+
+    // Summary
+    sectionTitle(data.summaryTitle || "Summary");
+    setNormal(8);
+    doc.setTextColor(...muted);
+    wrapText(doc, data.summary, contentW).forEach((line) => {
+      ensureSpace(4);
+      doc.text(line, margin, y);
+      y += 3.6;
+    });
+    y += 3;
+
+    // Experience
+    sectionTitle(data.workTitle || "Experience");
+    data.jobs.forEach((job) => {
+      ensureSpace(16);
+      setBold(7.5);
+      doc.setTextColor(...accent);
+      doc.text(job.time, margin, y);
+      y += 4;
+      setBold(9);
+      doc.setTextColor(255, 255, 255);
+      wrapText(doc, job.place, contentW).forEach((line) => {
         doc.text(line, margin, y);
-        y += 4.5;
+        y += 4;
       });
-
-      setNormal(8.5);
-      doc.setTextColor(...text);
+      setNormal(7.5);
+      doc.setTextColor(...muted);
       job.bullets.forEach((b) => {
-        const lines = wrapText(doc, b, contentW - 5);
-        ensureSpace(lines.length * 4 + 2);
-        doc.setFillColor(...accent);
-        doc.circle(margin + 1.2, y - 1.1, 0.7, "F");
-        lines.forEach((line, idx) => {
+        const lines = wrapText(doc, b, contentW - 4);
+        ensureSpace(lines.length * 3.5 + 2);
+        doc.setFillColor(...accent2);
+        doc.circle(margin + 1, y - 1, 0.6, "F");
+        lines.forEach((line) => {
           doc.text(line, margin + 4, y);
-          y += 4;
+          y += 3.5;
         });
-        y += 1;
+        y += 0.6;
       });
-      y += 3;
+      y += 2.5;
     });
 
+    // Projects
+    sectionTitle(data.projectsTitle || "Projects");
+    const colW = (contentW - 3) / 2;
+    for (let i = 0; i < data.projects.length; i += 2) {
+      const left = data.projects[i];
+      const right = data.projects[i + 1];
+      const measure = (p) => {
+        if (!p) return 0;
+        return (
+          5 +
+          wrapText(doc, p.title, colW - 5).length * 3.4 +
+          3.2 +
+          wrapText(doc, p.desc, colW - 5).length * 3.2 +
+          4
+        );
+      };
+      const h = Math.max(measure(left), measure(right), 18);
+      ensureSpace(h + 2);
+
+      const drawCard = (p, x) => {
+        if (!p) return;
+        doc.setFillColor(...panel);
+        doc.setDrawColor(...accent2);
+        doc.roundedRect(x, y, colW, h, 2, 2, "FD");
+        let py = y + 4.5;
+        setBold(8);
+        doc.setTextColor(255, 255, 255);
+        wrapText(doc, p.title, colW - 5).forEach((line) => {
+          doc.text(line, x + 2.5, py);
+          py += 3.4;
+        });
+        setNormal(6.5);
+        doc.setTextColor(...accent);
+        doc.text(p.tech, x + 2.5, py);
+        py += 3.5;
+        setNormal(7);
+        doc.setTextColor(...muted);
+        wrapText(doc, p.desc, colW - 5).forEach((line) => {
+          doc.text(line, x + 2.5, py);
+          py += 3.2;
+        });
+      };
+
+      drawCard(left, margin);
+      if (right) drawCard(right, margin + colW + 3);
+      y += h + 2.5;
+    }
+
+    // Skills
+    sectionTitle(data.skillsTitle || "Skills");
+    ensureSpace(16);
+    const skillW = (contentW - 6) / 4;
+    data.skills.forEach((sk, i) => {
+      const x = margin + i * (skillW + 2);
+      setBold(7);
+      doc.setTextColor(...accent);
+      doc.text(sk.title, x, y);
+      setNormal(7);
+      doc.setTextColor(...muted);
+      wrapText(doc, sk.items, skillW).forEach((line, li) => {
+        doc.text(line, x, y + 3.5 + li * 3.3);
+      });
+    });
+    y += 14;
+
+    // Education
     sectionTitle(data.eduTitle || "Education");
-    ensureSpace(20);
-    setBold(8);
+    ensureSpace(16);
+    setBold(7.5);
     doc.setTextColor(...accent);
     doc.text(data.eduTime, margin, y);
-    y += 5;
-    setBold(10);
-    doc.setTextColor(...text);
+    y += 4;
+    setBold(9);
+    doc.setTextColor(255, 255, 255);
     wrapText(doc, data.eduPlace, contentW).forEach((line) => {
-      doc.text(line, margin, y);
-      y += 4.5;
-    });
-    setNormal(8.5);
-    wrapText(doc, data.eduText, contentW).forEach((line) => {
       doc.text(line, margin, y);
       y += 4;
     });
-    y += 4;
-
-    sectionTitle(data.skillsTitle || "Skills");
-    ensureSpace(14);
-    setNormal(8.5);
-    let sx = margin;
-    let sy = y;
-    data.skills.forEach((skill) => {
-      const w = doc.getTextWidth(skill) + 5;
-      if (sx + w > pageW - margin) {
-        sx = margin;
-        sy += 7;
-        ensureSpace(10);
-      }
-      doc.setDrawColor(...accent);
-      doc.setFillColor(255, 255, 255);
-      doc.setTextColor(...accent);
-      doc.roundedRect(sx, sy - 3.5, w, 5.5, 2, 2, "S");
-      doc.text(skill, sx + 2.5, sy);
-      sx += w + 2;
+    setNormal(7.5);
+    doc.setTextColor(...muted);
+    wrapText(doc, data.eduText, contentW).forEach((line) => {
+      doc.text(line, margin, y);
+      y += 3.5;
     });
-    y = sy + 8;
+    y += 3;
 
-    sectionTitle(data.applicantTitle || "Applicant info");
-    drawKvGrid(data.applicant);
+    // Job preference (last)
+    if (data.prefs.length) {
+      sectionTitle(data.prefsTitle || "Job preference");
+      const prefW = (contentW - 3) / 2;
+      data.prefs.forEach((item, i) => {
+        const col = i % 2;
+        if (col === 0) ensureSpace(12);
+        const x = margin + col * (prefW + 3);
+        const boxY = y;
+        doc.setFillColor(...panel);
+        doc.setDrawColor(...accent2);
+        doc.roundedRect(x, boxY, prefW, 11, 2, 2, "FD");
+        setBold(7);
+        doc.setTextColor(...muted);
+        doc.text(item.k, x + 2.5, boxY + 4);
+        setNormal(7.5);
+        doc.setTextColor(...text);
+        wrapText(doc, item.v, prefW - 5).slice(0, 2).forEach((line, li) => {
+          doc.text(line, x + 2.5, boxY + 7.5 + li * 3);
+        });
+        if (col === 1 || i === data.prefs.length - 1) y += 13;
+      });
+    }
 
     const filename = getLang() === "en"
       ? "Suraram-Pimankham-CV-EN.pdf"
@@ -368,7 +402,6 @@
   }
 
   downloadBtn.addEventListener("click", downloadPdf);
-
   if (new URLSearchParams(location.search).get("download") === "1") {
     setTimeout(downloadPdf, 500);
   }

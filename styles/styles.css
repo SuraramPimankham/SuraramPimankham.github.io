@@ -198,6 +198,7 @@ section {
 }
 
 .cv-download-btn i,
+.resume-download-btn i,
 .theme-btn i {
   font-size: 1.05rem;
   color: var(--color-neon);
@@ -246,6 +247,7 @@ body.light-mode .fixed-actions__btn + .fixed-actions__btn::before {
 }
 
 body.light-mode .cv-download-btn i,
+body.light-mode .resume-download-btn i,
 body.light-mode .theme-btn i,
 body.light-mode .lang-btn__text,
 body.light-mode .cv-download-btn__text {

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/cv.css">
 </head>
 
-<body>
+<body data-doc="cv">
     <div class="cv-toolbar no-print">
         <div class="cv-actions">
             <button type="button" class="cv-actions__btn" id="cv-download" aria-label="Download PDF">
@@ -30,59 +30,28 @@
     </div>
 
     <main class="cv">
-        <header class="cv-header">
-            <div class="cv-header__left">
-                <h1 class="cv-name" data-i18n="cv.name">สุรราม พิมานคำ</h1>
-                <div class="cv-role" data-i18n="about.job.role.value">Programmer</div>
-                <div class="cv-sub" data-i18n="extras.job.subfield.value">Programmer/Developer</div>
-                <div class="cv-links">
-                    <a href="mailto:Surarampi@kkumail.com">Surarampi@kkumail.com</a>
-                    <a href="mailto:goodto.GG@gmail.com">goodto.GG@gmail.com</a>
-                    <a href="https://github.com/SuraramPimankham" target="_blank" rel="noopener">GitHub</a>
-                </div>
-            </div>
-            <div class="cv-header__right">
-                <div class="cv-contact">
-                    <div class="cv-contact__row">
-                        <span class="cv-contact__label">Tel</span>
-                        <span class="cv-contact__value"><a href="tel:0611252572">061-125-2572</a></span>
-                    </div>
-                    <div class="cv-contact__row">
-                        <span class="cv-contact__label" data-i18n="contact.location">ที่อยู่</span>
-                        <span class="cv-contact__value" data-i18n="contact.location.value">888 หมู่ 8 ซอยรัตนาธิเบศร์ 24 บางกระสอ เมืองนนทบุรี นนทบุรี 11000</span>
-                    </div>
-                    <div class="cv-contact__row">
-                        <span class="cv-contact__label" data-i18n="contact.languages">ภาษา</span>
-                        <span class="cv-contact__value" data-i18n="contact.languages.value">ไทย (ดีมาก), อังกฤษ (พอใช้)</span>
-                    </div>
-                </div>
+        <header class="cv-header cv-header--compact">
+            <h1 class="cv-name" data-i18n="cv.name">สุรราม พิมานคำ</h1>
+            <div class="cv-role" data-i18n="resume.title">Web developer</div>
+            <div class="cv-links cv-links--inline">
+                <a href="tel:0611252572">061-125-2572</a>
+                <a href="mailto:Surarampi@kkumail.com">Surarampi@kkumail.com</a>
+                <a href="mailto:goodto.GG@gmail.com">goodto.GG@gmail.com</a>
+                <a href="https://github.com/SuraramPimankham" target="_blank" rel="noopener">GitHub</a>
             </div>
         </header>
 
-        <section class="cv-section">
-            <h2 class="cv-section__title" data-i18n="extras.job.title">งานที่ต้องการ</h2>
-            <div class="cv-grid">
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.job.location.label">พื้นที่ที่ต้องการทำงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.location.value">ได้ทุกพื้นที่ · ขอนแก่น (พิเศษ)</div>
-                </div>
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.job.salary.label">เงินเดือน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.salary.value">20,000 - 30,000 บาท</div>
-                </div>
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.job.type.label">รูปแบบงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.type.value">ได้ทุกรูปแบบ · Work from Home (พิเศษ)</div>
-                </div>
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.job.start.label">ระยะเวลาเริ่มงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.start.value">หลัง 01/08/2026 · หลังจากได้งาน 1 สัปดาห์</div>
-                </div>
-            </div>
+        <section class="cv-section" data-cv="summary">
+            <h2 class="cv-section__title" data-i18n="cv.summary.title">Summary</h2>
+            <p class="cv-summary" data-i18n="cv.summary.body">
+                Web Developer (PHP) ประสบการณ์ 2+ ปีพัฒนาระบบ Web MLM ออกแบบฐานข้อมูล Commission
+                แก้ปัญหาฐานข้อมูล MLM และปรับปรุงประสิทธิภาพระบบระดับสิบล้านเรคอร์ด
+                ใช้ PHP เป็นหลัก เริ่ม Laravel ในช่วงเปลี่ยนผ่าน พร้อมโปรเจกต์ fullstack (React / Angular / Vue / Laravel + .NET)
+            </p>
         </section>
 
-        <section class="cv-section">
-            <h2 class="cv-section__title" data-i18n="work.title.plain">ประวัติการทำงาน</h2>
+        <section class="cv-section" data-cv="experience">
+            <h2 class="cv-section__title" data-i18n="work.title.plain">ประสบการณ์</h2>
             <div class="cv-timeline">
                 <div class="cv-item">
                     <div class="cv-item__meta">
@@ -90,10 +59,10 @@
                         <div class="cv-item__place" data-i18n-html="work.omc.title">OMC MLM Software <span>Programmer PHP</span></div>
                     </div>
                     <ul class="cv-item__list">
-                        <li data-i18n="work.omc.p1">พัฒนาและดูแลระบบ Web MLM ครบวงจรของบริษัทด้วย PHP เป็นหลัก</li>
-                        <li data-i18n="work.omc.p2">วิเคราะห์ แก้ไขบั๊ก และแก้ปัญหาจากลูกค้าร้องเรียน เพื่อให้ระบบทำงานได้ต่อเนื่อง</li>
-                        <li data-i18n="work.omc.p3">ให้คำปรึกษาการใช้งานระบบ MLM และประสานงานกับลูกค้าและทีมพัฒนา</li>
-                        <li data-i18n="work.omc.p4">ร่วมพัฒนาบางโมดูลด้วย Laravel ในช่วงที่บริษัทเริ่มเปลี่ยนผ่านจาก PHP เดิม</li>
+                        <li data-i18n="cv.omc.a1">ออกแบบฐานข้อมูลระบบ Commission และแก้โครงสร้างฐานข้อมูลของระบบ MLM</li>
+                        <li data-i18n="cv.omc.a2">ปรับปรุงประสิทธิภาพระบบที่รองรับข้อมูลประมาณ 60 ล้านเรคอร์ด ให้ตอบสนองเร็วขึ้น</li>
+                        <li data-i18n="cv.omc.a3">พัฒนาและดูแลแพลตฟอร์ม Web MLM ครบวงจรด้วย PHP รองรับลูกค้า/สมาชิกใช้งานจริง</li>
+                        <li data-i18n="cv.omc.a4">ร่วมพัฒนาบางโมดูลด้วย Laravel ในช่วงเปลี่ยนผ่านจาก PHP เดิม และแก้บั๊กจากลูกค้า</li>
                     </ul>
                 </div>
 
@@ -103,7 +72,6 @@
                         <div class="cv-item__place" data-i18n-html="work.intern.title">SOFT SQUARE GROUP <span>Professional Programmer Internship Program</span></div>
                     </div>
                     <ul class="cv-item__list">
-                        <li data-i18n="work.intern.p1">นักศึกษาฝึกงาน ตำแหน่ง Professional Programmer Internship Program</li>
                         <li data-i18n="work.intern.p2">ใช้งาน SQL/PL, Angular, .NET Core และ Jasper Report</li>
                         <li data-i18n="work.intern.p3">รวมระยะเวลาฝึกงาน 565 ชั่วโมง</li>
                     </ul>
@@ -111,7 +79,55 @@
             </div>
         </section>
 
-        <section class="cv-section">
+        <section class="cv-section" data-cv="projects">
+            <h2 class="cv-section__title" data-i18n="cv.projects.title">Projects</h2>
+            <div class="cv-projects">
+                <article class="cv-project">
+                    <h3 data-i18n="cv.projects.mlm.title">MLM Platform — Commission &amp; Database</h3>
+                    <div class="cv-project__tech">PHP · MySQL · Laravel · MLM</div>
+                    <p data-i18n="cv.projects.mlm.desc">ออกแบบฐานข้อมูล Commission แก้โครงสร้าง DB ของระบบ MLM และปรับ performance ของชุดข้อมูลขนาดใหญ่ (~60M records)</p>
+                </article>
+                <article class="cv-project">
+                    <h3 data-i18n="projects.finance.title">Ledger — React</h3>
+                    <div class="cv-project__tech">React · .NET · JWT</div>
+                    <p data-i18n="projects.finance.desc">React + ASP.NET Core · Login · CRUD · สลิป · Dashboard</p>
+                </article>
+                <article class="cv-project">
+                    <h3 data-i18n="projects.angular.title">Ledger — Angular</h3>
+                    <div class="cv-project__tech">Angular · .NET · SQLite</div>
+                    <p data-i18n="projects.angular.desc">Angular + ASP.NET Core · Login · CRUD · สลิป · Dashboard</p>
+                </article>
+                <article class="cv-project">
+                    <h3 data-i18n="projects.laravel.title">Ledger — Laravel</h3>
+                    <div class="cv-project__tech">Laravel · .NET · API</div>
+                    <p data-i18n="projects.laravel.desc">Laravel Blade + ASP.NET Core API · Login · CRUD · สลิป · Dashboard</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="cv-section" data-cv="skills">
+            <h2 class="cv-section__title" data-i18n="about.skills.title">ทักษะ</h2>
+            <div class="cv-skill-grid">
+                <div class="cv-skill-col">
+                    <h4>Backend</h4>
+                    <p>PHP, Laravel, .NET, REST API</p>
+                </div>
+                <div class="cv-skill-col">
+                    <h4>Frontend</h4>
+                    <p>HTML/CSS/JS, jQuery, Angular, React, Vue</p>
+                </div>
+                <div class="cv-skill-col">
+                    <h4>Database</h4>
+                    <p>MySQL, PostgreSQL, SQLite</p>
+                </div>
+                <div class="cv-skill-col">
+                    <h4>Tools</h4>
+                    <p>Git, Flutter, VS Code</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cv-section" data-cv="education">
             <h2 class="cv-section__title" data-i18n="contact.education">การศึกษา</h2>
             <div class="cv-item">
                 <div class="cv-item__meta">
@@ -122,48 +138,24 @@
             </div>
         </section>
 
-        <section class="cv-section">
-            <h2 class="cv-section__title" data-i18n="about.skills.title">ทักษะของผม</h2>
-            <div class="cv-tags" role="list">
-                <span class="cv-tag" role="listitem">PHP</span>
-                <span class="cv-tag" role="listitem">Laravel</span>
-                <span class="cv-tag" role="listitem">ASP.NET</span>
-                <span class="cv-tag" role="listitem">Angular</span>
-                <span class="cv-tag" role="listitem">React</span>
-                <span class="cv-tag" role="listitem">Vue</span>
-                <span class="cv-tag" role="listitem">Flutter</span>
-                <span class="cv-tag" role="listitem">MySQL</span>
-                <span class="cv-tag" role="listitem">PostgreSQL</span>
-                <span class="cv-tag" role="listitem">Git</span>
-            </div>
-        </section>
-
-        <section class="cv-section">
-            <h2 class="cv-section__title" data-i18n="extras.applicant.title">ข้อมูลผู้สมัคร</h2>
+        <section class="cv-section" data-cv="prefs">
+            <h2 class="cv-section__title" data-i18n="extras.job.title">งานที่ต้องการ</h2>
             <div class="cv-grid">
                 <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.applicant.gender.label">เพศ</div>
-                    <div class="cv-kv__v" data-i18n="extras.applicant.gender.value">ชาย</div>
+                    <div class="cv-kv__k" data-i18n="extras.job.location.label">พื้นที่ที่ต้องการทำงาน</div>
+                    <div class="cv-kv__v" data-i18n="extras.job.location.value">ได้ทุกพื้นที่ · ขอนแก่น (พิเศษ)</div>
                 </div>
                 <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.applicant.birth.label">วันเดือนปีเกิด</div>
-                    <div class="cv-kv__v" data-i18n="extras.applicant.birth.value">26/03/2545</div>
+                    <div class="cv-kv__k" data-i18n="extras.job.start.label">ระยะเวลาเริ่มงาน</div>
+                    <div class="cv-kv__v" data-i18n="extras.job.start.value">หลัง 01/08/2026 · หลังจากได้งาน 1 สัปดาห์</div>
                 </div>
                 <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.applicant.height.label">ส่วนสูง</div>
-                    <div class="cv-kv__v" data-i18n="extras.applicant.height.value">170 ซม.</div>
+                    <div class="cv-kv__k" data-i18n="extras.job.type.label">รูปแบบงาน</div>
+                    <div class="cv-kv__v" data-i18n="extras.job.type.value">ได้ทุกรูปแบบ · Work from Home (พิเศษ)</div>
                 </div>
                 <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.applicant.weight.label">น้ำหนัก</div>
-                    <div class="cv-kv__v" data-i18n="extras.applicant.weight.value">55 กก.</div>
-                </div>
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.applicant.military.label">สถานภาพทางทหาร</div>
-                    <div class="cv-kv__v" data-i18n="extras.applicant.military.value">ได้รับการยกเว้น</div>
-                </div>
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.applicant.license.label">ใบขับขี่</div>
-                    <div class="cv-kv__v" data-i18n="extras.applicant.license.value">จักรยานยนต์</div>
+                    <div class="cv-kv__k" data-i18n="extras.job.salary.label">เงินเดือน</div>
+                    <div class="cv-kv__v" data-i18n="extras.job.salary.value">20,000 - 30,000 บาท</div>
                 </div>
             </div>
         </section>
@@ -196,8 +188,7 @@
 
             if (btn) {
                 btn.addEventListener("click", () => {
-                    const current = getLang();
-                    localStorage.setItem("lang", current === "th" ? "en" : "th");
+                    localStorage.setItem("lang", getLang() === "th" ? "en" : "th");
                     location.reload();
                 });
             }

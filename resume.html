@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Suraram Pimankham</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles/resume.css">
+</head>
+
+<body class="rs-page" data-doc="resume">
+    <div class="rs-toolbar no-print">
+        <div class="rs-actions">
+            <button type="button" class="rs-actions__btn" id="cv-download" aria-label="Download PDF">
+                <i class="fas fa-download"></i>
+                <span>PDF</span>
+            </button>
+            <button type="button" class="rs-actions__btn" id="cv-lang" aria-label="Switch language">
+                <img class="rs-lang__flag" id="cv-lang-flag" src="https://flagcdn.com/w40/th.png" width="20" height="14" alt="">
+                <span id="cv-lang-text">TH</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="rs" id="resume-sheet">
+        <aside class="rs-side">
+            <div class="rs-card">
+                <div class="rs-avatar">
+                    <img src="img/Suraram.png" alt="สุรราม พิมานคำ" width="150" height="150" decoding="async">
+                </div>
+                <h3 class="rs-side-title"><i class="fas fa-address-card"></i> <span data-i18n="resume.contact">ติดต่อ</span></h3>
+                <div class="rs-contact">
+                    <a href="tel:0611252572"><i class="fas fa-phone"></i><span>061-125-2572</span></a>
+                    <a href="mailto:Surarampi@kkumail.com"><i class="fas fa-envelope"></i><span>Surarampi@kkumail.com</span></a>
+                    <a href="mailto:goodto.GG@gmail.com"><i class="fas fa-envelope"></i><span>goodto.GG@gmail.com</span></a>
+                    <a href="https://github.com/SuraramPimankham" target="_blank" rel="noopener"><i class="fab fa-github"></i><span>github.com/SuraramPimankham</span></a>
+                    <a href="index.html"><i class="fas fa-globe"></i><span>SuraramPimankham.github.io</span></a>
+                    <span><i class="fas fa-map-marker-alt"></i><span data-i18n="resume.location">ได้ทุกที่ · ขอนแก่น (พิเศษ) · WFH (พิเศษ)</span></span>
+                </div>
+            </div>
+
+            <div class="rs-card">
+                <h3 class="rs-side-title"><i class="fas fa-code"></i> <span data-i18n="about.skills.title">ทักษะ</span></h3>
+                <div class="rs-skill-group">
+                    <h4>Backend</h4>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>PHP</span><span>80%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:80%"></div></div></div>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>.NET</span><span>60%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:60%"></div></div></div>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>Laravel</span><span>30%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:30%"></div></div></div>
+                </div>
+                <div class="rs-skill-group">
+                    <h4>Frontend</h4>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>Web Technology</span><span>70%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:70%"></div></div></div>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>jQuery</span><span>60%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:60%"></div></div></div>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>Angular</span><span>30%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:30%"></div></div></div>
+                </div>
+                <div class="rs-skill-group">
+                    <h4>Database / Tools</h4>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>Database</span><span>80%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:80%"></div></div></div>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>Git</span><span>40%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:40%"></div></div></div>
+                    <div class="rs-bar"><div class="rs-bar__top"><span>Flutter</span><span>30%</span></div><div class="rs-bar__track"><div class="rs-bar__fill" style="width:30%"></div></div></div>
+                </div>
+            </div>
+
+            <div class="rs-card">
+                <h3 class="rs-side-title"><i class="fas fa-graduation-cap"></i> <span data-i18n="contact.education">การศึกษา</span></h3>
+                <div class="rs-edu-item">
+                    <strong data-i18n="resume.edu.degree">วท.บ. วิทยาการคอมพิวเตอร์และสารสนเทศ</strong>
+                    <span>Khon Kaen University Nong Khai Campus</span>
+                    <span>2020 – 2024</span>
+                    <p data-i18n="work.edu.p1">เกรดเฉลี่ย 3.56 เกียรตินิยมอันดับ 2 สำเร็จการศึกษาในปี 2024</p>
+                </div>
+            </div>
+
+            <div class="rs-card">
+                <h3 class="rs-side-title"><i class="fas fa-language"></i> <span data-i18n="contact.languages">ภาษา</span></h3>
+                <div class="rs-lang-row"><span data-i18n="resume.lang.th">ไทย</span><b data-i18n="resume.lang.th.level">เจ้าของภาษา</b></div>
+                <div class="rs-lang-row"><span data-i18n="resume.lang.en">อังกฤษ</span><b data-i18n="resume.lang.en.level">พื้นฐาน</b></div>
+            </div>
+        </aside>
+
+        <div class="rs-main">
+            <header class="rs-card rs-head">
+                <h1 data-i18n="cv.name">สุรราม พิมานคำ</h1>
+                <div class="rs-head__role" data-i18n="resume.title">Web developer</div>
+                <div class="rs-tags">
+                    <span class="rs-tag"><i class="fas fa-server"></i> Backend</span>
+                    <span class="rs-tag"><i class="fas fa-database"></i> Web MLM</span>
+                    <span class="rs-tag"><i class="fas fa-home"></i> WFH (พิเศษ)</span>
+                </div>
+            </header>
+
+            <section class="rs-card">
+                <h2 class="rs-section-title"><i class="fas fa-user"></i> <span data-i18n="resume.summary.title">สรุปโปรไฟล์</span></h2>
+                <p class="rs-summary" data-i18n="resume.summary.body">
+                    Programmer PHP ประสบการณ์พัฒนาระบบ Web MLM ครบวงจร ดูแลแก้ปัญหาให้ลูกค้า และเริ่มใช้ Laravel ในช่วงเปลี่ยนผ่านเทคโนโลยี
+                    เปิดรับงานได้ทุกพื้นที่ (ขอนแก่นพิเศษ) และได้ทุกรูปแบบงาน โดย Work from Home เป็นพิเศษ
+                </p>
+            </section>
+
+            <section class="rs-card">
+                <h2 class="rs-section-title"><i class="fas fa-briefcase"></i> <span data-i18n="work.title.plain">ประสบการณ์</span></h2>
+                <div class="rs-timeline">
+                    <article class="rs-job">
+                        <div class="rs-job__meta">
+                            <span class="rs-job__time" data-i18n="work.omc.duration">เม.ย. 2024 - พ.ค. 2026</span>
+                            <span class="rs-job__badge" data-i18n="resume.badge.omc">~2 ปี 2 เดือน</span>
+                        </div>
+                        <h3 data-i18n-html="work.omc.title">OMC MLM Software <span>Programmer PHP</span></h3>
+                        <ul>
+                            <li data-i18n="work.omc.p1">พัฒนาและดูแลระบบ Web MLM ครบวงจรของบริษัทด้วย PHP เป็นหลัก</li>
+                            <li data-i18n="work.omc.p2">วิเคราะห์ แก้ไขบั๊ก และแก้ปัญหาจากลูกค้าร้องเรียน เพื่อให้ระบบทำงานได้ต่อเนื่อง</li>
+                            <li data-i18n="work.omc.p3">ให้คำปรึกษาการใช้งานระบบ MLM และประสานงานกับลูกค้าและทีมพัฒนา</li>
+                            <li data-i18n="work.omc.p4">ร่วมพัฒนาบางโมดูลด้วย Laravel ในช่วงที่บริษัทเริ่มเปลี่ยนผ่านจาก PHP เดิม</li>
+                        </ul>
+                    </article>
+                    <article class="rs-job">
+                        <div class="rs-job__meta">
+                            <span class="rs-job__time" data-i18n="work.intern.duration">ฝึกงาน · 565 ชั่วโมง</span>
+                            <span class="rs-job__badge">Internship</span>
+                        </div>
+                        <h3 data-i18n-html="work.intern.title">SOFT SQUARE GROUP <span>Professional Programmer Internship Program</span></h3>
+                        <ul>
+                            <li data-i18n="work.intern.p2">ใช้งาน SQL/PL, Angular, .NET Core และ Jasper Report</li>
+                            <li data-i18n="work.intern.p3">รวมระยะเวลาฝึกงาน 565 ชั่วโมง</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <section class="rs-card">
+                <h2 class="rs-section-title"><i class="fas fa-folder-open"></i> <span data-i18n="resume.projects.title">โปรเจกต์เด่น</span></h2>
+                <div class="rs-projects">
+                    <article class="rs-project">
+                        <div class="rs-project__icon"><i class="fab fa-react"></i></div>
+                        <h4 data-i18n="projects.finance.title">Ledger — React</h4>
+                        <div class="rs-project__tech"><span>React</span><span>.NET</span><span>JWT</span></div>
+                        <p data-i18n="projects.finance.desc">React + ASP.NET Core · Login · CRUD · สลิป · Dashboard</p>
+                    </article>
+                    <article class="rs-project">
+                        <div class="rs-project__icon"><i class="fab fa-angular"></i></div>
+                        <h4 data-i18n="projects.angular.title">Ledger — Angular</h4>
+                        <div class="rs-project__tech"><span>Angular</span><span>.NET</span><span>SQLite</span></div>
+                        <p data-i18n="projects.angular.desc">Angular + ASP.NET Core · Login · CRUD · สลิป · Dashboard</p>
+                    </article>
+                    <article class="rs-project">
+                        <div class="rs-project__icon"><i class="fab fa-laravel"></i></div>
+                        <h4 data-i18n="projects.laravel.title">Ledger — Laravel</h4>
+                        <div class="rs-project__tech"><span>Laravel</span><span>.NET</span><span>API</span></div>
+                        <p data-i18n="projects.laravel.desc">Laravel Blade + ASP.NET Core API · Login · CRUD · สลิป · Dashboard</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="rs-card">
+                <h2 class="rs-section-title"><i class="fas fa-layer-group"></i> <span data-i18n="resume.tech.title">Technical Skills</span></h2>
+                <div class="rs-tech-grid">
+                    <div class="rs-tech-col">
+                        <h4>Backend</h4>
+                        <ul><li>PHP</li><li>.NET</li><li>Laravel</li><li>REST API</li></ul>
+                    </div>
+                    <div class="rs-tech-col">
+                        <h4>Frontend</h4>
+                        <ul><li>HTML / CSS</li><li>JavaScript</li><li>jQuery</li><li>Angular</li></ul>
+                    </div>
+                    <div class="rs-tech-col">
+                        <h4>Database</h4>
+                        <ul><li>MySQL</li><li>PostgreSQL</li><li>SQLite</li></ul>
+                    </div>
+                    <div class="rs-tech-col">
+                        <h4>Tools</h4>
+                        <ul><li>Git</li><li>VS Code</li><li>Flutter</li></ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="vendor/jspdf.umd.min.js"></script>
+    <script src="fonts-sarabun.js"></script>
+    <script src="resume-avatar.js"></script>
+    <script src="app.js"></script>
+    <script src="resume-pdf.js"></script>
+    <script>
+        (function () {
+            const btn = document.getElementById("cv-lang");
+            const txt = document.getElementById("cv-lang-text");
+            const flag = document.getElementById("cv-lang-flag");
+
+            function getLang() {
+                return localStorage.getItem("lang") || "th";
+            }
+
+            function updateChrome() {
+                const lang = getLang();
+                document.documentElement.lang = lang;
+                if (txt) txt.textContent = lang === "th" ? "TH" : "EN";
+                if (flag) {
+                    flag.src = lang === "th"
+                        ? "https://flagcdn.com/w40/th.png"
+                        : "https://flagcdn.com/w40/gb.png";
+                }
+            }
+
+            if (btn) {
+                btn.addEventListener("click", () => {
+                    localStorage.setItem("lang", getLang() === "th" ? "en" : "th");
+                    location.reload();
+                });
+            }
+            updateChrome();
+        })();
+    </script>
+</body>
+
+</html>
