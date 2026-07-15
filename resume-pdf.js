@@ -399,133 +399,181 @@
     });
     rightY += sumH + 3;
 
-    // Experience
-    ensureRight(10);
-    setBold(8);
-    doc.setTextColor(...accent);
-    doc.setFillColor(...accent);
-    doc.rect(rightX, rightY + 0.8, 1.2, 3.5, "F");
-    doc.text(data.workTitle || "Experience", rightX + 3, rightY + 4);
-    rightY += 8;
-
-    data.jobs.forEach((job) => {
-      const bulletLines = job.bullets.map((b) => wrapText(doc, b, rightW - 6));
-      const need =
-        12 + bulletLines.reduce((n, lines) => n + lines.length * 3.6 + 1, 0);
-      ensureRight(need);
-
+    // Experience (section card)
+    {
       setBold(7);
+      const innerW = rightW - 10;
+      const jobBlocks = data.jobs.map((job) => {
+        const badgeW = job.badge ? doc.getTextWidth(job.badge) + 8 : 0;
+        const timeLines = wrapText(doc, job.time, Math.max(innerW - badgeW, innerW * 0.55));
+        const companyLines = wrapText(doc, job.company, innerW);
+        const roleLines = job.role ? wrapText(doc, job.role, innerW) : [];
+        const bulletLines = job.bullets.map((b) => wrapText(doc, b, innerW - 4));
+        const h =
+          timeLines.length * 3.6 +
+          companyLines.length * 4 +
+          roleLines.length * 3.8 +
+          bulletLines.reduce((n, lines) => n + lines.length * 3.6 + 0.8, 0) +
+          6;
+        return { job, timeLines, companyLines, roleLines, bulletLines, h };
+      });
+      const workH = 10 + jobBlocks.reduce((n, b) => n + b.h, 0);
+      ensureRight(workH);
+      panelBox(rightX, rightY, rightW, workH);
+      let ry = rightY + 6;
+      setBold(8);
       doc.setTextColor(...accent);
-      doc.text(job.time, rightX + 3, rightY);
-      if (job.badge) {
-        const bw = doc.getTextWidth(job.badge) + 3;
-        doc.setDrawColor(...accent2);
-        doc.roundedRect(rightX + rightW - bw, rightY - 3, bw, 4, 1, 1, "S");
-        doc.text(job.badge, rightX + rightW - bw + 1.5, rightY);
-      }
       doc.setFillColor(...accent);
-      doc.circle(rightX + 0.8, rightY - 1, 1, "F");
-      rightY += 4.5;
+      doc.rect(rightX + 3, ry - 2.5, 1.2, 3.5, "F");
+      doc.text(data.workTitle || "Experience", rightX + 6, ry);
+      ry += 6;
 
-      setBold(9);
-      doc.setTextColor(...text);
-      doc.text(job.company, rightX + 3, rightY);
-      rightY += 4;
-      if (job.role) {
-        setBold(7.5);
+      jobBlocks.forEach((block) => {
+        setBold(7);
         doc.setTextColor(...accent);
-        doc.text(job.role, rightX + 3, rightY);
-        rightY += 4;
-      }
-      setNormal(7);
-      doc.setTextColor(...muted);
-      job.bullets.forEach((b) => {
-        const lines = wrapText(doc, b, rightW - 8);
-        ensureRight(lines.length * 3.6 + 2);
-        doc.setFillColor(...accent2);
-        doc.circle(rightX + 4, rightY - 1, 0.6, "F");
-        lines.forEach((l) => {
-          doc.text(l, rightX + 6, rightY);
-          rightY += 3.6;
+        let ty = ry;
+        block.timeLines.forEach((l) => {
+          doc.text(l, rightX + 5, ty);
+          ty += 3.6;
         });
-        rightY += 0.8;
-      });
-      rightY += 3;
-    });
-
-    // Projects
-    ensureRight(28);
-    setBold(8);
-    doc.setTextColor(...accent);
-    doc.setFillColor(...accent);
-    doc.rect(rightX, rightY + 0.8, 1.2, 3.5, "F");
-    doc.text(data.projectsTitle || "Projects", rightX + 3, rightY + 4);
-    rightY += 8;
-
-    const colW = (rightW - 4) / 3;
-    const projBlocks = data.projects.map((p) => {
-      const titleLines = wrapText(doc, p.title, colW - 4);
-      const descLines = wrapText(doc, p.desc, colW - 4);
-      const techLine = p.tech.join(" · ");
-      const techLines = wrapText(doc, techLine, colW - 4);
-      const h = 6 + titleLines.length * 3.5 + techLines.length * 3.2 + descLines.length * 3.2 + 4;
-      return { p, titleLines, descLines, techLines, h };
-    });
-    const rowH = Math.max(...projBlocks.map((b) => b.h), 20);
-    ensureRight(rowH + 2);
-
-    projBlocks.forEach((block, i) => {
-      const x = rightX + i * (colW + 2);
-      panelBox(x, rightY, colW, rowH);
-      let py = rightY + 5;
-      setBold(7.5);
-      doc.setTextColor(...text);
-      block.titleLines.forEach((l) => {
-        doc.text(l, x + 2, py);
-        py += 3.5;
-      });
-      setNormal(6);
-      doc.setTextColor(...accent);
-      block.techLines.forEach((l) => {
-        doc.text(l, x + 2, py);
-        py += 3.2;
-      });
-      setNormal(6.5);
-      doc.setTextColor(...muted);
-      block.descLines.forEach((l) => {
-        doc.text(l, x + 2, py);
-        py += 3.2;
-      });
-    });
-    rightY += rowH + 3;
-
-    // Tech grid
-    ensureRight(28);
-    setBold(8);
-    doc.setTextColor(...accent);
-    doc.setFillColor(...accent);
-    doc.rect(rightX, rightY + 0.8, 1.2, 3.5, "F");
-    doc.text(data.techTitle || "Technical Skills", rightX + 3, rightY + 4);
-    rightY += 8;
-
-    const tColW = (rightW - 6) / 4;
-    const techH = 8 + Math.max(...data.tech.map((c) => c.items.length), 1) * 3.6;
-    ensureRight(techH);
-    data.tech.forEach((col, i) => {
-      const x = rightX + i * (tColW + 2);
-      setBold(7);
-      doc.setTextColor(...accent);
-      doc.text(col.title, x, rightY);
-      let ty = rightY + 4.5;
-      setNormal(6.5);
-      doc.setTextColor(...muted);
-      col.items.forEach((item) => {
+        if (block.job.badge) {
+          const bw = doc.getTextWidth(block.job.badge) + 3;
+          doc.setDrawColor(...accent2);
+          doc.roundedRect(rightX + rightW - 4 - bw, ry - 3, bw, 4, 1, 1, "S");
+          doc.text(block.job.badge, rightX + rightW - 4 - bw + 1.5, ry);
+        }
         doc.setFillColor(...accent);
-        doc.circle(x + 0.8, ty - 1, 0.55, "F");
-        doc.text(item, x + 2.5, ty);
-        ty += 3.6;
+        doc.circle(rightX + 3.2, ry - 1, 1, "F");
+        ry = Math.max(ty, ry + 4);
+
+        setBold(9);
+        doc.setTextColor(...text);
+        block.companyLines.forEach((l) => {
+          doc.text(l, rightX + 5, ry);
+          ry += 4;
+        });
+        if (block.roleLines.length) {
+          setBold(7.5);
+          doc.setTextColor(...accent);
+          block.roleLines.forEach((l) => {
+            doc.text(l, rightX + 5, ry);
+            ry += 3.8;
+          });
+        }
+        setNormal(7);
+        doc.setTextColor(...muted);
+        block.bulletLines.forEach((lines) => {
+          doc.setFillColor(...accent2);
+          doc.circle(rightX + 6, ry - 1, 0.6, "F");
+          lines.forEach((l, li) => {
+            doc.text(l, rightX + 8, ry);
+            ry += 3.6;
+          });
+          ry += 0.8;
+        });
+        ry += 2.5;
       });
-    });
+      rightY += workH + 3;
+    }
+
+    // Projects — 2x2 cards inside section panel
+    {
+      const cols = 2;
+      const gapP = 2.5;
+      const colW = (rightW - 10 - gapP) / cols;
+      const projBlocks = data.projects.map((p) => {
+        const titleLines = wrapText(doc, p.title, colW - 5);
+        const descLines = wrapText(doc, p.desc, colW - 5);
+        const techLines = wrapText(doc, p.tech.join(" · "), colW - 5);
+        const h = 5 + titleLines.length * 3.5 + techLines.length * 3.1 + descLines.length * 3.1 + 3;
+        return { titleLines, descLines, techLines, h };
+      });
+      const rows = Math.ceil(projBlocks.length / cols) || 1;
+      let rowsH = 0;
+      for (let r = 0; r < rows; r++) {
+        const slice = projBlocks.slice(r * cols, r * cols + cols);
+        rowsH += Math.max(...slice.map((b) => b.h), 16) + (r > 0 ? gapP : 0);
+      }
+      const projSectionH = 10 + rowsH + 3;
+      ensureRight(projSectionH);
+      panelBox(rightX, rightY, rightW, projSectionH);
+      let ry = rightY + 6;
+      setBold(8);
+      doc.setTextColor(...accent);
+      doc.setFillColor(...accent);
+      doc.rect(rightX + 3, ry - 2.5, 1.2, 3.5, "F");
+      doc.text(data.projectsTitle || "Projects", rightX + 6, ry);
+      ry += 5;
+
+      for (let r = 0; r < rows; r++) {
+        const slice = projBlocks.slice(r * cols, r * cols + cols);
+        const rowH = Math.max(...slice.map((b) => b.h), 16);
+        slice.forEach((block, i) => {
+          const x = rightX + 4 + i * (colW + gapP);
+          doc.setFillColor(13, 18, 24);
+          doc.setDrawColor(46, 204, 113);
+          doc.setLineWidth(0.25);
+          doc.roundedRect(x, ry, colW, rowH, 2, 2, "FD");
+          let py = ry + 4.5;
+          setBold(7.5);
+          doc.setTextColor(...text);
+          block.titleLines.forEach((l) => {
+            doc.text(l, x + 2.5, py);
+            py += 3.5;
+          });
+          setNormal(6);
+          doc.setTextColor(...accent);
+          block.techLines.forEach((l) => {
+            doc.text(l, x + 2.5, py);
+            py += 3.1;
+          });
+          setNormal(6.5);
+          doc.setTextColor(...muted);
+          block.descLines.forEach((l) => {
+            doc.text(l, x + 2.5, py);
+            py += 3.1;
+          });
+        });
+        ry += rowH + gapP;
+      }
+      rightY += projSectionH + 3;
+    }
+
+    // Technical Skills (section card)
+    {
+      const tCols = 4;
+      const gapT = 2;
+      const tColW = (rightW - 8 - gapT * (tCols - 1)) / tCols;
+      const techH = 10 + 5 + Math.max(...data.tech.map((c) => c.items.length), 1) * 3.6 + 2;
+      ensureRight(techH);
+      panelBox(rightX, rightY, rightW, techH);
+      let ry = rightY + 6;
+      setBold(8);
+      doc.setTextColor(...accent);
+      doc.setFillColor(...accent);
+      doc.rect(rightX + 3, ry - 2.5, 1.2, 3.5, "F");
+      doc.text(data.techTitle || "Technical Skills", rightX + 6, ry);
+      ry += 6;
+      data.tech.forEach((col, i) => {
+        const x = rightX + 4 + i * (tColW + gapT);
+        setBold(7);
+        doc.setTextColor(...accent);
+        doc.text(col.title, x, ry);
+        let ty = ry + 4.5;
+        setNormal(6.5);
+        doc.setTextColor(...muted);
+        col.items.forEach((item) => {
+          doc.setFillColor(...accent);
+          doc.circle(x + 0.8, ty - 1, 0.55, "F");
+          const itemLines = wrapText(doc, item, tColW - 3);
+          itemLines.forEach((l) => {
+            doc.text(l, x + 2.5, ty);
+            ty += 3.6;
+          });
+        });
+      });
+      rightY += techH + 3;
+    }
 
     const filename = getLang() === "en"
       ? "Suraram-Pimankham-Resume-EN.pdf"

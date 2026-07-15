@@ -83,7 +83,7 @@ body.rs-page {
   width: min(1100px, calc(100% - 1.5rem));
   margin: 0 auto 2rem;
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 280px minmax(0, 1fr);
   gap: 1rem;
   align-items: start;
 }
@@ -93,6 +93,7 @@ body.rs-page {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+  min-width: 0;
 }
 
 .rs-card {
@@ -101,6 +102,8 @@ body.rs-page {
   border-radius: 16px;
   padding: 1.1rem 1.15rem;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .rs-avatar {
@@ -321,6 +324,7 @@ body.rs-page {
   justify-content: space-between;
   gap: 0.4rem;
   margin-bottom: 0.25rem;
+  min-width: 0;
 }
 
 .rs-job__time {
@@ -328,6 +332,9 @@ body.rs-page {
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 1.4;
+  min-width: 0;
+  flex: 1 1 auto;
+  word-break: break-word;
 }
 
 .rs-job__badge {
@@ -383,18 +390,20 @@ body.rs-page {
 
 .rs-projects {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
+  min-width: 0;
 }
 
 .rs-project {
   background: rgba(13, 18, 24, 0.75);
-  border: 1px solid rgba(46, 204, 113, 0.18);
+  border: 1px solid rgba(46, 204, 113, 0.28);
   border-radius: 14px;
   padding: 0.9rem;
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
+  min-width: 0;
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
@@ -419,6 +428,7 @@ body.rs-page {
   margin: 0;
   font-size: 0.92rem;
   color: #fff;
+  overflow-wrap: anywhere;
 }
 
 .rs-project p {
@@ -427,6 +437,7 @@ body.rs-page {
   color: var(--rs-muted);
   line-height: 1.45;
   flex: 1;
+  overflow-wrap: anywhere;
 }
 
 .rs-project__tech {
@@ -448,6 +459,11 @@ body.rs-page {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.75rem;
+  min-width: 0;
+}
+
+.rs-tech-col {
+  min-width: 0;
 }
 
 .rs-tech-col h4 {
@@ -489,9 +505,18 @@ body.rs-page {
     grid-template-columns: 1fr;
   }
 
-  .rs-projects,
-  .rs-tech-grid {
+  .rs-projects {
     grid-template-columns: 1fr;
+  }
+
+  .rs-tech-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 901px) {
+  .rs-tech-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
