@@ -14,13 +14,15 @@ export default function Layout() {
     <div className="shell">
       <aside className="side">
         <div className="brand">
-          <span className="brand-mark">฿</span>
+          <span className="brand-mark" aria-hidden="true">
+            ฿
+          </span>
           <div>
             <strong>Ledger</strong>
-            <small>รายรับรายจ่าย</small>
+            <small>Finance</small>
           </div>
         </div>
-        <nav>
+        <nav aria-label="หลัก">
           <NavLink to="/" end>
             แดชบอร์ด
           </NavLink>

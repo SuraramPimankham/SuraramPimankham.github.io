@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { api, formatDate, money, slipUrl } from '../api'
 import { useAuth } from '../auth'
+import DataTable from '../components/DataTable'
 
 const emptyForm = {
   type: 'expense',
@@ -14,11 +15,23 @@ const emptyForm = {
   clearSlip: false,
 }
 
+const emptyFilter = {
+  type: '',
+  dateFrom: '',
+  dateTo: '',
+  title: '',
+  category: '',
+  user: '',
+  amountFrom: '',
+  amountTo: '',
+}
+
 export default function TransactionsPage() {
   const { isAdmin } = useAuth()
   const [items, setItems] = useState([])
   const [users, setUsers] = useState([])
-  const [filter, setFilter] = useState({ type: '', category: '' })
+  const [draft, setDraft] = useState(emptyFilter)
+  const [applied, setApplied] = useState(emptyFilter)
   const [form, setForm] = useState(emptyForm)
   const [slip, setSlip] = useState(null)
   const [editing, setEditing] = useState(null)
@@ -26,9 +39,9 @@ export default function TransactionsPage() {
   const [busy, setBusy] = useState(false)
   const [showForm, setShowForm] = useState(false)
 
-  async function load() {
+  async function load(type = applied.type) {
     try {
-      const data = await api.getTransactions(filter)
+      const data = await api.getTransactions({ type })
       setItems(data)
     } catch (e) {
       setError(e.message)
@@ -37,11 +50,49 @@ export default function TransactionsPage() {
 
   useEffect(() => {
     load()
-  }, [filter.type, filter.category])
+  }, [])
 
   useEffect(() => {
     if (isAdmin) api.getUsers().then(setUsers).catch(() => {})
   }, [isAdmin])
+
+  const visible = useMemo(() => {
+    const title = applied.title.trim().toLowerCase()
+    const category = applied.category.trim().toLowerCase()
+    const user = applied.user.trim().toLowerCase()
+    const dateFrom = applied.dateFrom
+    const dateTo = applied.dateTo
+    const amountFrom = applied.amountFrom === '' ? null : Number(applied.amountFrom)
+    const amountTo = applied.amountTo === '' ? null : Number(applied.amountTo)
+    return items.filter((t) => {
+      const day = t.occurredAt?.slice(0, 10) || ''
+      if (dateFrom && day < dateFrom) return false
+      if (dateTo && day > dateTo) return false
+      if (
+        title &&
+        !t.title?.toLowerCase().includes(title) &&
+        !t.note?.toLowerCase().includes(title)
+      )
+        return false
+      if (category && !t.category?.toLowerCase().includes(category)) return false
+      if (user && !t.userName?.toLowerCase().includes(user)) return false
+      const amt = Number(t.amount)
+      if (amountFrom != null && !Number.isNaN(amountFrom) && amt < amountFrom) return false
+      if (amountTo != null && !Number.isNaN(amountTo) && amt > amountTo) return false
+      return true
+    })
+  }, [items, applied])
+
+  function onSearch() {
+    setApplied(draft)
+    load(draft.type)
+  }
+
+  function onClear() {
+    setDraft(emptyFilter)
+    setApplied(emptyFilter)
+    load('')
+  }
 
   function openCreate() {
     setEditing(null)
@@ -111,27 +162,114 @@ export default function TransactionsPage() {
           <h1>รายรับรายจ่าย</h1>
           <p className="muted">บันทึกรายการพร้อมรูปสลิปหรือหลักฐาน</p>
         </div>
-        <button type="button" className="btn primary" onClick={openCreate}>
-          + เพิ่มรายการ
-        </button>
       </header>
-
-      <div className="filters">
-        <select value={filter.type} onChange={(e) => setFilter((f) => ({ ...f, type: e.target.value }))}>
-          <option value="">ทุกประเภท</option>
-          <option value="income">รายรับ</option>
-          <option value="expense">รายจ่าย</option>
-        </select>
-        <input
-          placeholder="ค้นหาหมวดหมู่"
-          value={filter.category}
-          onChange={(e) => setFilter((f) => ({ ...f, category: e.target.value }))}
-        />
-      </div>
 
       {error && !showForm && <div className="alert">{error}</div>}
 
-      <div className="table-wrap panel">
+      <DataTable
+        title="รายการทั้งหมด"
+        actions={
+          <button type="button" className="btn primary" onClick={openCreate}>
+            + เพิ่มรายการ
+          </button>
+        }
+        filters={
+          <>
+            <label className="data-table__filter g-span-3">
+              <span>วันที่</span>
+              <div className="data-table__range">
+                <input
+                  type="date"
+                  value={draft.dateFrom}
+                  onChange={(e) => setDraft((f) => ({ ...f, dateFrom: e.target.value }))}
+                  aria-label="วันที่เริ่มต้น"
+                />
+                <span className="data-table__range-sep">ถึง</span>
+                <input
+                  type="date"
+                  value={draft.dateTo}
+                  onChange={(e) => setDraft((f) => ({ ...f, dateTo: e.target.value }))}
+                  aria-label="วันที่สิ้นสุด"
+                />
+              </div>
+            </label>
+            <label className={`data-table__filter ${isAdmin ? 'g-span-2' : 'g-span-3'}`}>
+              <span>หัวข้อ</span>
+              <input
+                type="search"
+                placeholder="ค้นหา"
+                value={draft.title}
+                onChange={(e) => setDraft((f) => ({ ...f, title: e.target.value }))}
+              />
+            </label>
+            <label className="data-table__filter g-span-2">
+              <span>หมวด</span>
+              <input
+                type="search"
+                placeholder="ค้นหา"
+                value={draft.category}
+                onChange={(e) => setDraft((f) => ({ ...f, category: e.target.value }))}
+              />
+            </label>
+            {isAdmin && (
+              <label className="data-table__filter g-span-2">
+                <span>ผู้ใช้</span>
+                <input
+                  type="search"
+                  placeholder="ค้นหา"
+                  value={draft.user}
+                  onChange={(e) => setDraft((f) => ({ ...f, user: e.target.value }))}
+                />
+              </label>
+            )}
+            <label className="data-table__filter g-span-1">
+              <span>ประเภท</span>
+              <select
+                value={draft.type}
+                onChange={(e) => setDraft((f) => ({ ...f, type: e.target.value }))}
+              >
+                <option value="">ทั้งหมด</option>
+                <option value="income">รายรับ</option>
+                <option value="expense">รายจ่าย</option>
+              </select>
+            </label>
+            <label className={`data-table__filter ${isAdmin ? 'g-span-2' : 'g-span-3'}`}>
+              <span>จำนวน</span>
+              <div className="data-table__range">
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="ต่ำสุด"
+                  value={draft.amountFrom}
+                  onChange={(e) => setDraft((f) => ({ ...f, amountFrom: e.target.value }))}
+                  aria-label="จำนวนเริ่มต้น"
+                />
+                <span className="data-table__range-sep">ถึง</span>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="สูงสุด"
+                  value={draft.amountTo}
+                  onChange={(e) => setDraft((f) => ({ ...f, amountTo: e.target.value }))}
+                  aria-label="จำนวนสิ้นสุด"
+                />
+              </div>
+            </label>
+          </>
+        }
+        filterActions={
+          <>
+            <button type="button" className="btn primary" onClick={onSearch}>
+              ค้นหา
+            </button>
+            <button type="button" className="btn ghost" onClick={onClear}>
+              ล้าง
+            </button>
+          </>
+        }
+      >
         <table>
           <thead>
             <tr>
@@ -142,56 +280,57 @@ export default function TransactionsPage() {
               <th>ประเภท</th>
               <th className="num">จำนวน</th>
               <th>สลิป</th>
-              <th></th>
+              <th className="data-table__actions-col" />
             </tr>
           </thead>
           <tbody>
-            {items.length === 0 && (
+            {visible.length === 0 ? (
               <tr>
-                <td colSpan={isAdmin ? 8 : 7} className="muted">
+                <td colSpan={isAdmin ? 8 : 7} className="data-table__empty">
                   ยังไม่มีรายการ
                 </td>
               </tr>
+            ) : (
+              visible.map((t) => (
+                <tr key={t.id}>
+                  <td className="data-table__date">{formatDate(t.occurredAt)}</td>
+                  <td className="data-table__title">
+                    <strong>{t.title}</strong>
+                    {t.note && <div className="muted small">{t.note}</div>}
+                  </td>
+                  <td>{t.category}</td>
+                  {isAdmin && <td>{t.userName}</td>}
+                  <td>
+                    <span className={t.type === 'income' ? 'tag-in' : 'tag-out'}>
+                      {t.type === 'income' ? 'รายรับ' : 'รายจ่าย'}
+                    </span>
+                  </td>
+                  <td className={`num ${t.type}`}>
+                    {t.type === 'income' ? '+' : '-'}฿{money(t.amount)}
+                  </td>
+                  <td>
+                    {t.slipPath ? (
+                      <a href={slipUrl(t.slipPath)} target="_blank" rel="noreferrer" className="slip-link">
+                        ดูรูป
+                      </a>
+                    ) : (
+                      <span className="muted">—</span>
+                    )}
+                  </td>
+                  <td className="actions">
+                    <button type="button" className="btn ghost sm" onClick={() => openEdit(t)}>
+                      แก้ไข
+                    </button>
+                    <button type="button" className="btn danger sm" onClick={() => onDelete(t.id)}>
+                      ลบ
+                    </button>
+                  </td>
+                </tr>
+              ))
             )}
-            {items.map((t) => (
-              <tr key={t.id}>
-                <td>{formatDate(t.occurredAt)}</td>
-                <td>
-                  <strong>{t.title}</strong>
-                  {t.note && <div className="muted small">{t.note}</div>}
-                </td>
-                <td>{t.category}</td>
-                {isAdmin && <td>{t.userName}</td>}
-                <td>
-                  <span className={t.type === 'income' ? 'tag-in' : 'tag-out'}>
-                    {t.type === 'income' ? 'รายรับ' : 'รายจ่าย'}
-                  </span>
-                </td>
-                <td className={`num ${t.type}`}>
-                  {t.type === 'income' ? '+' : '-'}฿{money(t.amount)}
-                </td>
-                <td>
-                  {t.slipPath ? (
-                    <a href={slipUrl(t.slipPath)} target="_blank" rel="noreferrer" className="slip-link">
-                      ดูรูป
-                    </a>
-                  ) : (
-                    <span className="muted">—</span>
-                  )}
-                </td>
-                <td className="actions">
-                  <button type="button" className="btn ghost sm" onClick={() => openEdit(t)}>
-                    แก้ไข
-                  </button>
-                  <button type="button" className="btn danger sm" onClick={() => onDelete(t.id)}>
-                    ลบ
-                  </button>
-                </td>
-              </tr>
-            ))}
           </tbody>
         </table>
-      </div>
+      </DataTable>
 
       {showForm &&
         createPortal(

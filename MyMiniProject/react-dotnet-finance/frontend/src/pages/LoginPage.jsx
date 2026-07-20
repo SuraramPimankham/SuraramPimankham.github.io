@@ -26,13 +26,21 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-      <div className="login-visual" aria-hidden="true">
-        <div className="login-orb" />
-        <p className="login-tagline">บันทึกรายรับรายจ่าย พร้อมหลักฐานชัดเจน</p>
-      </div>
+      <section className="login-hero" aria-hidden="true">
+        <p className="login-hero__eyebrow">Ledger</p>
+        <h1 className="login-hero__title">
+          ระบบรายรับรายจ่าย
+          <span>ที่อ่านง่าย และพร้อมหลักฐาน</span>
+        </h1>
+        <ul className="login-hero__points">
+          <li>บันทึกรายการพร้อมสลิป</li>
+          <li>สรุปยอดแบบเรียลไทม์</li>
+          <li>แยกสิทธิ์ผู้ใช้ / ผู้ดูแล</li>
+        </ul>
+      </section>
       <form className="login-card" onSubmit={onSubmit}>
-        <h1>Ledger</h1>
-        <p className="muted">เข้าสู่ระบบเพื่อจัดการการเงิน</p>
+        <h2>Sign in</h2>
+        <p className="muted">เข้าสู่ระบบเพื่อจัดการบัญชีของคุณ</p>
         {error && <div className="alert">{error}</div>}
         <label>
           ชื่อผู้ใช้
@@ -48,11 +56,11 @@ export default function LoginPage() {
             required
           />
         </label>
-        <button className="btn primary" disabled={busy} type="submit">
-          {busy ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
+        <button className="btn primary wide" disabled={busy} type="submit">
+          {busy ? 'กำลังเข้าสู่ระบบ...' : 'Continue'}
         </button>
         <p className="hint">
-          ทดลอง: <code>admin / admin123</code> หรือ <code>user / user123</code>
+          Demo: <code>admin / admin123</code> · <code>user / user123</code>
         </p>
       </form>
     </div>

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { api, formatDate } from '../api'
+import DataTable from '../components/DataTable'
 
 const empty = {
   username: '',
@@ -11,8 +12,19 @@ const empty = {
   isActive: true,
 }
 
+const emptyFilter = {
+  username: '',
+  fullName: '',
+  email: '',
+  role: '',
+  status: '',
+  createdAt: '',
+}
+
 export default function UsersPage() {
   const [users, setUsers] = useState([])
+  const [draft, setDraft] = useState(emptyFilter)
+  const [applied, setApplied] = useState(emptyFilter)
   const [form, setForm] = useState(empty)
   const [editing, setEditing] = useState(null)
   const [showForm, setShowForm] = useState(false)
@@ -30,6 +42,34 @@ export default function UsersPage() {
   useEffect(() => {
     load()
   }, [])
+
+  const visible = useMemo(() => {
+    const username = applied.username.trim().toLowerCase()
+    const fullName = applied.fullName.trim().toLowerCase()
+    const email = applied.email.trim().toLowerCase()
+    const role = applied.role
+    const status = applied.status
+    const createdAt = applied.createdAt.trim().toLowerCase()
+    return users.filter((u) => {
+      if (username && !u.username?.toLowerCase().includes(username)) return false
+      if (fullName && !u.fullName?.toLowerCase().includes(fullName)) return false
+      if (email && !(u.email || '').toLowerCase().includes(email)) return false
+      if (role && u.role !== role) return false
+      if (status === 'active' && !u.isActive) return false
+      if (status === 'inactive' && u.isActive) return false
+      if (createdAt && !formatDate(u.createdAt).toLowerCase().includes(createdAt)) return false
+      return true
+    })
+  }, [users, applied])
+
+  function onSearch() {
+    setApplied(draft)
+  }
+
+  function onClear() {
+    setDraft(emptyFilter)
+    setApplied(emptyFilter)
+  }
 
   function openCreate() {
     setEditing(null)
@@ -100,14 +140,90 @@ export default function UsersPage() {
           <h1>ผู้ใช้</h1>
           <p className="muted">จัดการบัญชีผู้ใช้ระบบ (เฉพาะ admin)</p>
         </div>
-        <button type="button" className="btn primary" onClick={openCreate}>
-          + เพิ่มผู้ใช้
-        </button>
       </header>
 
       {error && !showForm && <div className="alert">{error}</div>}
 
-      <div className="table-wrap panel">
+      <DataTable
+        title="บัญชีผู้ใช้"
+        actions={
+          <button type="button" className="btn primary" onClick={openCreate}>
+            + เพิ่มผู้ใช้
+          </button>
+        }
+        filters={
+          <>
+            <label className="data-table__filter g-span-2">
+              <span>Username</span>
+              <input
+                type="search"
+                placeholder="ค้นหา"
+                value={draft.username}
+                onChange={(e) => setDraft((f) => ({ ...f, username: e.target.value }))}
+              />
+            </label>
+            <label className="data-table__filter g-span-2">
+              <span>ชื่อ</span>
+              <input
+                type="search"
+                placeholder="ค้นหา"
+                value={draft.fullName}
+                onChange={(e) => setDraft((f) => ({ ...f, fullName: e.target.value }))}
+              />
+            </label>
+            <label className="data-table__filter g-span-3">
+              <span>อีเมล</span>
+              <input
+                type="search"
+                placeholder="ค้นหา"
+                value={draft.email}
+                onChange={(e) => setDraft((f) => ({ ...f, email: e.target.value }))}
+              />
+            </label>
+            <label className="data-table__filter g-span-2">
+              <span>บทบาท</span>
+              <select
+                value={draft.role}
+                onChange={(e) => setDraft((f) => ({ ...f, role: e.target.value }))}
+              >
+                <option value="">ทั้งหมด</option>
+                <option value="user">ผู้ใช้</option>
+                <option value="admin">ผู้ดูแล</option>
+              </select>
+            </label>
+            <label className="data-table__filter g-span-1">
+              <span>สถานะ</span>
+              <select
+                value={draft.status}
+                onChange={(e) => setDraft((f) => ({ ...f, status: e.target.value }))}
+              >
+                <option value="">ทั้งหมด</option>
+                <option value="active">ใช้งาน</option>
+                <option value="inactive">ปิด</option>
+              </select>
+            </label>
+            <label className="data-table__filter g-span-2">
+              <span>สร้างเมื่อ</span>
+              <input
+                type="search"
+                placeholder="ค้นหา"
+                value={draft.createdAt}
+                onChange={(e) => setDraft((f) => ({ ...f, createdAt: e.target.value }))}
+              />
+            </label>
+          </>
+        }
+        filterActions={
+          <>
+            <button type="button" className="btn primary" onClick={onSearch}>
+              ค้นหา
+            </button>
+            <button type="button" className="btn ghost" onClick={onClear}>
+              ล้าง
+            </button>
+          </>
+        }
+      >
         <table>
           <thead>
             <tr>
@@ -117,37 +233,45 @@ export default function UsersPage() {
               <th>บทบาท</th>
               <th>สถานะ</th>
               <th>สร้างเมื่อ</th>
-              <th></th>
+              <th className="data-table__actions-col" />
             </tr>
           </thead>
           <tbody>
-            {users.map((u) => (
-              <tr key={u.id}>
-                <td>
-                  <code>{u.username}</code>
-                </td>
-                <td>{u.fullName}</td>
-                <td>{u.email || '—'}</td>
-                <td>{u.role === 'admin' ? 'ผู้ดูแล' : 'ผู้ใช้'}</td>
-                <td>
-                  <span className={u.isActive ? 'tag-in' : 'tag-out'}>
-                    {u.isActive ? 'ใช้งาน' : 'ปิด'}
-                  </span>
-                </td>
-                <td>{formatDate(u.createdAt)}</td>
-                <td className="actions">
-                  <button type="button" className="btn ghost sm" onClick={() => openEdit(u)}>
-                    แก้ไข
-                  </button>
-                  <button type="button" className="btn danger sm" onClick={() => onDelete(u.id)}>
-                    ลบ
-                  </button>
+            {visible.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="data-table__empty">
+                  ไม่พบผู้ใช้
                 </td>
               </tr>
-            ))}
+            ) : (
+              visible.map((u) => (
+                <tr key={u.id}>
+                  <td>
+                    <code className="data-table__code">{u.username}</code>
+                  </td>
+                  <td className="data-table__title">{u.fullName}</td>
+                  <td>{u.email || '—'}</td>
+                  <td>{u.role === 'admin' ? 'ผู้ดูแล' : 'ผู้ใช้'}</td>
+                  <td>
+                    <span className={u.isActive ? 'tag-in' : 'tag-out'}>
+                      {u.isActive ? 'ใช้งาน' : 'ปิด'}
+                    </span>
+                  </td>
+                  <td className="data-table__date">{formatDate(u.createdAt)}</td>
+                  <td className="actions">
+                    <button type="button" className="btn ghost sm" onClick={() => openEdit(u)}>
+                      แก้ไข
+                    </button>
+                    <button type="button" className="btn danger sm" onClick={() => onDelete(u.id)}>
+                      ลบ
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
-      </div>
+      </DataTable>
 
       {showForm &&
         createPortal(
