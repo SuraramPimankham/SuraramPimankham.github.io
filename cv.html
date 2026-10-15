@@ -6,170 +6,163 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - Suraram Pimankham</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="styles/cv.css">
+    <link rel="stylesheet" href="styles/a4.css?v=20261015b">
+    <link rel="stylesheet" href="styles/cv.css?v=20261015b">
 </head>
 
-<body data-doc="cv">
-    <div class="cv-toolbar no-print">
-        <div class="cv-actions">
-            <button type="button" class="cv-actions__btn" id="cv-download" aria-label="Download PDF">
+<body class="doc-page" data-doc="cv">
+    <div class="doc-toolbar no-print">
+        <div class="doc-actions">
+            <button type="button" class="doc-actions__btn" id="cv-download" aria-label="Download PDF">
                 <i class="fas fa-download"></i>
                 <span>PDF</span>
             </button>
-            <button type="button" class="cv-actions__btn" id="cv-lang" aria-label="Switch language">
-                <img class="cv-lang__flag" id="cv-lang-flag" src="https://flagcdn.com/w40/th.png" width="20" height="14" alt="">
+            <button type="button" class="doc-actions__btn" id="cv-lang" aria-label="Switch language">
+                <img class="doc-flag" id="cv-lang-flag" src="https://flagcdn.com/w40/th.png" width="18" height="12" alt="">
                 <span id="cv-lang-text">TH</span>
             </button>
         </div>
     </div>
 
-    <main class="cv">
-        <header class="cv-header cv-header--compact">
-            <h1 class="cv-name" data-i18n="cv.name">สุรราม พิมานคำ</h1>
-            <div class="cv-role" data-i18n="resume.title">Web developer</div>
-            <div class="cv-links cv-links--inline">
-                <a href="tel:0611252572">061-125-2572</a>
-                <a href="mailto:Surarampi@kkumail.com">Surarampi@kkumail.com</a>
-                <a href="mailto:goodto.GG@gmail.com">goodto.GG@gmail.com</a>
-                <a href="https://github.com/SuraramPimankham" target="_blank" rel="noopener">GitHub</a>
-            </div>
-        </header>
-
-        <section class="cv-section" data-cv="summary">
-            <h2 class="cv-section__title" data-i18n="cv.summary.title">Summary</h2>
-            <p class="cv-summary" data-i18n="cv.summary.body">
-                Web Developer (PHP) ประสบการณ์ 2+ ปีพัฒนาระบบ Web MLM ออกแบบฐานข้อมูล Commission
-                แก้ปัญหาฐานข้อมูล MLM และปรับปรุงประสิทธิภาพระบบระดับสิบล้านเรคอร์ด
-                ใช้ PHP เป็นหลัก เริ่ม Laravel ในช่วงเปลี่ยนผ่าน พร้อมโปรเจกต์ fullstack (React / Angular / Vue / Laravel + .NET)
-            </p>
-        </section>
-
-        <section class="cv-section" data-cv="experience">
-            <h2 class="cv-section__title" data-i18n="work.title.plain">ประสบการณ์</h2>
-            <div class="cv-timeline">
-                <div class="cv-item">
-                    <div class="cv-item__meta">
-                        <div class="cv-item__time" data-i18n="work.omc.duration">เม.ย. 2567 - พ.ค. 2569 (พ.ศ.)</div>
-                        <div class="cv-item__place" data-i18n-html="work.omc.title">OMC MLM Software <span>Programmer PHP</span></div>
-                    </div>
-                    <ul class="cv-item__list">
-                        <li data-i18n="cv.omc.a1">ออกแบบฐานข้อมูลระบบ Commission และแก้โครงสร้างฐานข้อมูลของระบบ MLM</li>
-                        <li data-i18n="cv.omc.a2">ปรับปรุงประสิทธิภาพระบบที่รองรับข้อมูลประมาณ 60 ล้านเรคอร์ด ให้ตอบสนองเร็วขึ้น</li>
-                        <li data-i18n="cv.omc.a3">พัฒนาและดูแลแพลตฟอร์ม Web MLM ครบวงจรด้วย PHP รองรับลูกค้า/สมาชิกใช้งานจริง</li>
-                        <li data-i18n="cv.omc.a4">ร่วมพัฒนาบางโมดูลด้วย Laravel ในช่วงเปลี่ยนผ่านจาก PHP เดิม และแก้บั๊กจากลูกค้า</li>
+    <div class="sheet-stage">
+        <div class="sheet-frame">
+            <main class="sheet cv">
+                <header class="cv-head">
+                    <h1 class="cv-name" data-i18n="cv.name">สุรราม พิมานคำ</h1>
+                    <div class="cv-role" data-i18n="resume.title">Web developer</div>
+                    <ul class="cv-contact">
+                        <li><a href="tel:0611252572"><i class="fas fa-phone"></i><span>061-125-2572</span></a></li>
+                        <li><a href="mailto:Surarampi@kkumail.com"><i class="fas fa-envelope"></i><span>Surarampi@kkumail.com</span></a></li>
+                        <li><a href="mailto:goodto.GG@gmail.com"><i class="fas fa-envelope"></i><span>goodto.GG@gmail.com</span></a></li>
+                        <li><a href="https://github.com/SuraramPimankham" target="_blank" rel="noopener"><i class="fab fa-github"></i><span>GitHub</span></a></li>
                     </ul>
-                </div>
+                </header>
 
-                <div class="cv-item">
-                    <div class="cv-item__meta">
-                        <div class="cv-item__time" data-i18n="work.intern.duration">ฝึกงาน · 565 ชั่วโมง</div>
-                        <div class="cv-item__place" data-i18n-html="work.intern.title">SOFT SQUARE GROUP <span>Professional Programmer Internship Program</span></div>
-                    </div>
-                    <ul class="cv-item__list">
-                        <li data-i18n="work.intern.p2">ใช้งาน SQL/PL, Angular, .NET Core และ Jasper Report</li>
-                        <li data-i18n="work.intern.p3">รวมระยะเวลาฝึกงาน 565 ชั่วโมง</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+                <aside class="cv-side">
+                    <section>
+                        <h2 class="h-sec"><i class="fas fa-code"></i><span data-i18n="about.skills.title">ทักษะ</span></h2>
+                        <div class="cv-skill">
+                            <h3>Backend</h3>
+                            <p>PHP, Laravel, .NET, REST API</p>
+                        </div>
+                        <div class="cv-skill">
+                            <h3>Frontend</h3>
+                            <p>HTML/CSS/JS, jQuery, Angular, React, Vue</p>
+                        </div>
+                        <div class="cv-skill">
+                            <h3>Database</h3>
+                            <p>MySQL, PostgreSQL, SQLite</p>
+                        </div>
+                        <div class="cv-skill">
+                            <h3>Tools</h3>
+                            <p>Git, Flutter, VS Code</p>
+                        </div>
+                    </section>
 
-        <section class="cv-section" data-cv="projects">
-            <h2 class="cv-section__title" data-i18n="cv.projects.title">Projects</h2>
-            <div class="cv-projects">
-                <article class="cv-project">
-                    <h3 data-i18n="cv.projects.mlm.title">MLM Platform — Commission &amp; Database</h3>
-                    <div class="cv-project__tech">PHP · MySQL · Laravel · MLM</div>
-                    <p data-i18n="cv.projects.mlm.desc">ออกแบบฐานข้อมูล Commission แก้โครงสร้าง DB ของระบบ MLM และปรับ performance ของชุดข้อมูลขนาดใหญ่ (~60M records)</p>
-                </article>
-                <article class="cv-project">
-                    <h3 data-i18n="projects.etoon.title">EToon — Flutter Mobile</h3>
-                    <div class="cv-project__tech">Flutter · Firebase · Dart</div>
-                    <p data-i18n="projects.etoon.desc">แอปอ่านเว็บตูน · Firebase Auth · รายการโปรด · อ่านตอน · ค้นหา</p>
-                </article>
-                <article class="cv-project">
-                    <h3 data-i18n="projects.finance.title">Ledger — React</h3>
-                    <div class="cv-project__tech">SPA + REST API · React · .NET</div>
-                    <p data-i18n="projects.finance.desc">SPA + REST API · React · ASP.NET Core · Login · CRUD · สลิป · Dashboard</p>
-                </article>
-                <article class="cv-project">
-                    <h3 data-i18n="projects.angular.title">Ledger — Angular</h3>
-                    <div class="cv-project__tech">SPA + REST API · Angular · .NET</div>
-                    <p data-i18n="projects.angular.desc">SPA + REST API · Angular · ASP.NET Core · Login · CRUD · สลิป · Dashboard</p>
-                </article>
-                <article class="cv-project">
-                    <h3 data-i18n="projects.laravel.title">Ledger — Laravel</h3>
-                    <div class="cv-project__tech">SPA + REST API · Laravel · PHP</div>
-                    <p data-i18n="projects.laravel.desc">SPA + REST API · Laravel Blade/JS · Login · CRUD · สลิป · Dashboard</p>
-                </article>
-            </div>
-        </section>
+                    <section>
+                        <h2 class="h-sec"><i class="fas fa-graduation-cap"></i><span data-i18n="contact.education">การศึกษา</span></h2>
+                        <div class="cv-edu">
+                            <div class="cv-edu__time" data-i18n="work.edu.duration">2563 - 2567 (พ.ศ.)</div>
+                            <div class="cv-edu__place" data-i18n-html="work.edu.title">ปริญญาตรี วิทยาการคอมพิวเตอร์และสารสนเทศ <span>Khon Kaen University Nong Khai Campus</span></div>
+                            <div class="cv-edu__text" data-i18n="work.edu.p1">เกรดเฉลี่ย 3.56 เกียรตินิยมอันดับ 2 สำเร็จการศึกษาในปี 2567 (พ.ศ.)</div>
+                        </div>
+                    </section>
 
-        <section class="cv-section" data-cv="skills">
-            <h2 class="cv-section__title" data-i18n="about.skills.title">ทักษะ</h2>
-            <div class="cv-skill-grid">
-                <div class="cv-skill-col">
-                    <h4>Backend</h4>
-                    <p>PHP, Laravel, .NET, REST API</p>
-                </div>
-                <div class="cv-skill-col">
-                    <h4>Frontend</h4>
-                    <p>HTML/CSS/JS, jQuery, Angular, React, Vue</p>
-                </div>
-                <div class="cv-skill-col">
-                    <h4>Database</h4>
-                    <p>MySQL, PostgreSQL, SQLite</p>
-                </div>
-                <div class="cv-skill-col">
-                    <h4>Tools</h4>
-                    <p>Git, Flutter, VS Code</p>
-                </div>
-            </div>
-        </section>
+                    <section>
+                        <h2 class="h-sec"><i class="fas fa-briefcase"></i><span data-i18n="extras.job.title">งานที่ต้องการ</span></h2>
+                        <div class="cv-pref">
+                            <div class="cv-pref__k" data-i18n="extras.job.location.label">พื้นที่ที่ต้องการทำงาน</div>
+                            <div class="cv-pref__v" data-i18n="extras.job.location.value">ได้ทุกพื้นที่ · ขอนแก่น (พิเศษ)</div>
+                        </div>
+                        <div class="cv-pref">
+                            <div class="cv-pref__k" data-i18n="extras.job.start.label">ระยะเวลาเริ่มงาน</div>
+                            <div class="cv-pref__v" data-i18n="extras.job.start.value">หลัง 01/08/2569 (พ.ศ.) · หลังจากได้งาน 1 สัปดาห์</div>
+                        </div>
+                        <div class="cv-pref">
+                            <div class="cv-pref__k" data-i18n="extras.job.type.label">รูปแบบงาน</div>
+                            <div class="cv-pref__v" data-i18n="extras.job.type.value">ได้ทุกรูปแบบ · Work from Home (พิเศษ)</div>
+                        </div>
+                        <div class="cv-pref">
+                            <div class="cv-pref__k" data-i18n="extras.job.salary.label">เงินเดือน</div>
+                            <div class="cv-pref__v" data-i18n="extras.job.salary.value">20,000 - 30,000 บาท</div>
+                        </div>
+                    </section>
+                </aside>
 
-        <section class="cv-section" data-cv="education">
-            <h2 class="cv-section__title" data-i18n="contact.education">การศึกษา</h2>
-            <div class="cv-item">
-                <div class="cv-item__meta">
-                    <div class="cv-item__time" data-i18n="work.edu.duration">2563 - 2567 (พ.ศ.)</div>
-                    <div class="cv-item__place" data-i18n-html="work.edu.title">ปริญญาตรี วิทยาการคอมพิวเตอร์และสารสนเทศ <span>Khon Kaen University Nong Khai Campus</span></div>
-                </div>
-                <div class="cv-item__text" data-i18n="work.edu.p1">เกรดเฉลี่ย 3.56 เกียรตินิยมอันดับ 2 สำเร็จการศึกษาในปี 2567 (พ.ศ.)</div>
-            </div>
-        </section>
+                <div class="cv-main">
+                    <section>
+                        <h2 class="h-sec"><i class="fas fa-user"></i><span data-i18n="cv.summary.title">Summary</span></h2>
+                        <p class="cv-summary" data-i18n="cv.summary.body">
+                            Web Developer (PHP) ประสบการณ์ 2+ ปีพัฒนาระบบ Web MLM ออกแบบฐานข้อมูล Commission
+                            แก้ปัญหาฐานข้อมูล MLM และปรับปรุงประสิทธิภาพระบบระดับสิบล้านเรคอร์ด
+                            ใช้ PHP เป็นหลัก เริ่ม Laravel ในช่วงเปลี่ยนผ่าน พร้อมโปรเจกต์ fullstack (React / Angular / Vue / Laravel + .NET)
+                        </p>
+                    </section>
 
-        <section class="cv-section" data-cv="prefs">
-            <h2 class="cv-section__title" data-i18n="extras.job.title">งานที่ต้องการ</h2>
-            <div class="cv-grid">
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.job.location.label">พื้นที่ที่ต้องการทำงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.location.value">ได้ทุกพื้นที่ · ขอนแก่น (พิเศษ)</div>
-                </div>
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.job.start.label">ระยะเวลาเริ่มงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.start.value">หลัง 01/08/2569 (พ.ศ.) · หลังจากได้งาน 1 สัปดาห์</div>
-                </div>
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.job.type.label">รูปแบบงาน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.type.value">ได้ทุกรูปแบบ · Work from Home (พิเศษ)</div>
-                </div>
-                <div class="cv-kv">
-                    <div class="cv-kv__k" data-i18n="extras.job.salary.label">เงินเดือน</div>
-                    <div class="cv-kv__v" data-i18n="extras.job.salary.value">20,000 - 30,000 บาท</div>
-                </div>
-            </div>
-        </section>
-    </main>
+                    <section>
+                        <h2 class="h-sec"><i class="fas fa-briefcase"></i><span data-i18n="work.title.plain">ประสบการณ์</span></h2>
+                        <div class="cv-timeline">
+                            <article class="cv-item">
+                                <div class="cv-item__time" data-i18n="work.omc.duration">เม.ย. 2567 - พ.ค. 2569 (พ.ศ.)</div>
+                                <div class="cv-item__place" data-i18n-html="work.omc.title">OMC MLM Software <span>Programmer PHP</span></div>
+                                <ul class="cv-item__list">
+                                    <li data-i18n="cv.omc.a1">ออกแบบฐานข้อมูลระบบ Commission และแก้โครงสร้างฐานข้อมูลของระบบ MLM</li>
+                                    <li data-i18n="cv.omc.a2">ปรับปรุงประสิทธิภาพระบบที่รองรับข้อมูลประมาณ 60 ล้านเรคอร์ด ให้ตอบสนองเร็วขึ้น</li>
+                                    <li data-i18n="cv.omc.a3">พัฒนาและดูแลแพลตฟอร์ม Web MLM ครบวงจรด้วย PHP รองรับลูกค้า/สมาชิกใช้งานจริง</li>
+                                    <li data-i18n="cv.omc.a4">ร่วมพัฒนาบางโมดูลด้วย Laravel ในช่วงเปลี่ยนผ่านจาก PHP เดิม และแก้บั๊กจากลูกค้า</li>
+                                </ul>
+                            </article>
+                            <article class="cv-item">
+                                <div class="cv-item__time" data-i18n="work.intern.duration">ฝึกงาน · 565 ชั่วโมง</div>
+                                <div class="cv-item__place" data-i18n-html="work.intern.title">SOFT SQUARE GROUP <span>Professional Programmer Internship Program</span></div>
+                                <ul class="cv-item__list">
+                                    <li data-i18n="work.intern.p2">ใช้งาน SQL/PL, Angular, .NET Core และ Jasper Report</li>
+                                    <li data-i18n="work.intern.p3">รวมระยะเวลาฝึกงาน 565 ชั่วโมง</li>
+                                </ul>
+                            </article>
+                        </div>
+                    </section>
 
-    <script src="vendor/jspdf.umd.min.js"></script>
-    <script src="fonts-sarabun.js"></script>
-    <script src="app.js?v=20260716a"></script>
-    <script src="cv-pdf.js"></script>
+                    <section>
+                        <h2 class="h-sec"><i class="fas fa-folder-open"></i><span data-i18n="cv.projects.title">Projects</span></h2>
+                        <div class="cv-projects">
+                            <article class="cv-project">
+                                <h3 data-i18n="cv.projects.mlm.title">MLM Platform — Commission &amp; Database</h3>
+                                <div class="cv-project__tech">PHP · MySQL · Laravel · MLM</div>
+                                <p data-i18n="cv.projects.mlm.desc">ออกแบบฐานข้อมูล Commission แก้โครงสร้าง DB ของระบบ MLM และปรับ performance ของชุดข้อมูลขนาดใหญ่ (~60M records)</p>
+                            </article>
+                            <article class="cv-project">
+                                <h3 data-i18n="projects.etoon.title">EToon — Flutter Mobile</h3>
+                                <div class="cv-project__tech">Flutter · Firebase · Dart</div>
+                                <p data-i18n="projects.etoon.desc">แอปอ่านเว็บตูน · Firebase Auth · รายการโปรด · อ่านตอน · ค้นหา</p>
+                            </article>
+                            <article class="cv-project">
+                                <h3 data-i18n="projects.finance.title">Ledger — React</h3>
+                                <div class="cv-project__tech">SPA + REST API · React · .NET</div>
+                                <p data-i18n="projects.finance.desc">SPA + REST API · React · ASP.NET Core · Login · CRUD · สลิป · Dashboard</p>
+                            </article>
+                            <article class="cv-project">
+                                <h3 data-i18n="projects.angular.title">Ledger — Angular</h3>
+                                <div class="cv-project__tech">SPA + REST API · Angular · .NET</div>
+                                <p data-i18n="projects.angular.desc">SPA + REST API · Angular · ASP.NET Core · Login · CRUD · สลิป · Dashboard</p>
+                            </article>
+                            <article class="cv-project">
+                                <h3 data-i18n="projects.laravel.title">Ledger — Laravel</h3>
+                                <div class="cv-project__tech">SPA + REST API · Laravel · PHP</div>
+                                <p data-i18n="projects.laravel.desc">SPA + REST API · Laravel Blade/JS · Login · CRUD · สลิป · Dashboard</p>
+                            </article>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="app.js?v=20261015b"></script>
+    <script src="a4-print.js?v=20261015c"></script>
     <script>
         (function () {
             const btn = document.getElementById("cv-lang");
