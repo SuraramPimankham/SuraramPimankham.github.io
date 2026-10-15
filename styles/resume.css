@@ -143,7 +143,7 @@ a {
   gap: 1.6mm;
   color: var(--muted);
   font-size: 10px;
-  line-height: 1.35;
+  line-height: 14px;
   min-width: 0;
 }
 
@@ -176,8 +176,8 @@ a {
 
 .rs-bar {
   display: grid;
-  gap: 0.4mm;
-  margin-bottom: 2mm;
+  gap: 3px;
+  margin-bottom: 8px;
 }
 
 .rs-bar:last-child {
@@ -187,22 +187,39 @@ a {
 .rs-bar__top {
   display: flex;
   justify-content: space-between;
-  gap: 4px;
+  align-items: baseline;
+  gap: 6px;
+  height: 14px;
   font-size: 10px;
+  line-height: 14px;
   color: var(--muted);
 }
 
-.rs-bar__track {
-  height: 3px;
-  border-radius: 99px;
-  background: var(--track);
+.rs-bar__top span:first-child {
+  min-width: 0;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.rs-bar__fill {
-  height: 100%;
-  border-radius: 99px;
-  background: var(--accent);
+.rs-bar__top span:last-child {
+  flex: 0 0 auto;
+}
+
+/* 4px is a whole device pixel at 100%, 125%, 150%, and 200%.
+   Square ends keep short and long fills the same thickness. */
+.rs-bar__track {
+  position: relative;
+  top: 0;
+  height: 4px;
+  min-height: 4px;
+  max-height: 4px;
+  border-radius: 0;
+  background-color: var(--track);
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-size: var(--fill, 0%) 4px;
+  background-position: left center;
 }
 
 .rs-edu strong {
@@ -244,7 +261,7 @@ a {
   margin: 0;
   color: var(--muted);
   font-size: 11.5px;
-  line-height: 1.55;
+  line-height: 18px;
 }
 
 .rs-timeline {
@@ -332,7 +349,7 @@ a {
   padding-left: 3mm;
   color: var(--muted);
   font-size: 11px;
-  line-height: 1.45;
+  line-height: 16px;
 }
 
 .rs-job li::before {
@@ -382,27 +399,38 @@ a {
 
 .rs-skill-lines {
   list-style: none;
-  margin: 1.8mm 0 0;
+  margin: 6px 0 0;
   padding: 0;
   display: grid;
-  gap: 1.3mm;
+  gap: 4px;
 }
 
 .rs-skill-lines li {
   display: grid;
-  grid-template-columns: 34mm minmax(0, 1fr);
-  gap: 1.6mm;
-  align-items: baseline;
-  font-size: 10.5px;
-  line-height: 1.35;
+  grid-template-rows: 14px 13px;
+  height: 27px;
+  overflow: hidden;
+}
+
+.rs-skill-lines b,
+.rs-skill-lines span {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .rs-skill-lines b {
   color: var(--ink);
+  font-size: 10.5px;
   font-weight: 700;
+  line-height: 14px;
 }
 
 .rs-skill-lines span {
   color: var(--muted);
+  font-size: 10px;
   font-weight: 400;
+  line-height: 13px;
 }
